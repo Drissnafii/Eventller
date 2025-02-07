@@ -123,7 +123,7 @@ We use JIRA for project management and issue tracking. Access our board at:
 
 Detailed documentation is available in the `/docs` directory:
 
-- 📐 [Architecture Overview](docs/architecture.md)
+- 📐 [Architecture Overview](docs/ARCHITECTURE.md)
 - 💾 [Database Schema](docs/database.md)
 - 📊 [API Documentation](docs/api.md)
 - 🔄 [Workflow Guides](docs/workflows.md)
