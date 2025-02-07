@@ -65,7 +65,7 @@ Meet the talented individuals behind Eventller:
 ### Frontend Technologies
 ```
 🔷 HTML5/CSS3/ES6
-🔶 Bootstrap 5
+🔶 Tailwind CSS
 🔷 Fetch API/AJAX
 ```
 
