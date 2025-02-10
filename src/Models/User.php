@@ -1,6 +1,7 @@
 <?php 
 
 namespace App\Models;
+use App\Core\Database;
 
 class User {
     private $db;
@@ -45,12 +46,12 @@ class User {
 
         $stmt = $this->db->prepare("INSERT INTO users (name, email, password, avatar, role, isActive) 
                                     VALUES (:name, :email, :password, :avatar, :role, :isActive)");
-        $stmt->bindParam(':name', $name, PDO::PARAM_STR);
-        $stmt->bindParam(':email', $email, PDO::PARAM_STR);
-        $stmt->bindParam(':password', $hashedPassword, PDO::PARAM_STR);
-        $stmt->bindParam(':avatar', $avatar, PDO::PARAM_STR);
-        $stmt->bindParam(':role', $role, PDO::PARAM_STR);
-        $stmt->bindParam(':isActive', $isActive, PDO::BOOLVAL);
+        $stmt->bindParam(':name', $name, \PDO::PARAM_STR);
+        $stmt->bindParam(':email', $email, \PDO::PARAM_STR);
+        $stmt->bindParam(':password', $hashedPassword, \PDO::PARAM_STR);
+        $stmt->bindParam(':avatar', $avatar, \PDO::PARAM_STR);
+        $stmt->bindParam(':role', $role, \PDO::PARAM_STR);
+        $stmt->bindParam(':isActive', $isActive, \PDO::PARAM_BOOL);
         return $stmt->execute();
     }
     
