@@ -1,5 +1,1 @@
 CREATE DATABASE eventller;
-
-
-
-
