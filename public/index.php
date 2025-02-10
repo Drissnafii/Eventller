@@ -1,10 +1,14 @@
 <?php
 
+require $_SERVER['DOCUMENT_ROOT'] . '/vendor/autoload.php';
+use App\Core\Router;
 
-$routes = [
-    '/' => [ContollerTemplate::class, 'home.php'],
-    '/about' => 'about.php',
-    '/contact' => 'contact.php'
-]
+$Router = new Router();
+$Router->get('/', 'HomeController@index');
+$Router->get('/', 'HomeController@index');
+$Router->get('/', 'HomeController@index');
+$Router->get('/', 'HomeController@index');
+$Router->get('/', 'HomeController@index');
+$Router->get('/', 'HomeController@index');
 
 ?>
