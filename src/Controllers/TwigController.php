@@ -12,8 +12,8 @@ abstract class TwigController{
     protected $twig;
     public function __construct()
     {
-        $loader = new FilesystemLoader(realpath($_SERVER["DOCUMENT_ROOT"] . '/../') .'\templates');
-        $twig = new \Twig\Environment($loader, [
+        $loader = new FilesystemLoader(realpath($_SERVER["DOCUMENT_ROOT"] . '/../') .'/templates');
+        $twig = new Environment($loader, [
             //'cache' => realpath($_SERVER["DOCUMENT_ROOT"].'/src/cache'),    
         ]);
         $this->twig = $twig;

@@ -3,11 +3,15 @@
 namespace App\Controllers;
 
 use App\Controllers\TwigController;
-
+use App\Core\Database;
 class ContollerTemplate extends TwigController{
     
     public function Home(){
-        echo $this->twig->render('client/home.twig', []);
+        //echo $this->twig->render('client/home.twig', []);
+        $Database = new Database();
+        $Database->getConnection();
+        // phpinfo();
+
     }
     public function Signin(){
         echo $this->twig->render('client/signin.twig', []);
