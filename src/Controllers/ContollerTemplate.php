@@ -7,7 +7,7 @@ use App\Controllers\TwigController;
 class ContollerTemplate extends TwigController{
     
     public function Home(){
-        echo $this->twig->render('admin/dashborad.twig', []);
+        echo $this->twig->render('client/home.twig', []);
     }
     public function Signin(){
         echo $this->twig->render('client/signin.twig', []);
@@ -19,6 +19,6 @@ class ContollerTemplate extends TwigController{
         echo $this->twig->render('client/forgotpassword.twig', []);
     }
     public function Dashboard(){
-        echo $this->twig->render('client/index.twig', []);
+        echo $this->twig->render('admin/dashborad.twig', []);
     }
 }
