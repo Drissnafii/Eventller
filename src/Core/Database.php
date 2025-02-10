@@ -21,9 +21,9 @@ class Database {
         $this->user = $_ENV['DB_USER'];
         $this->pass = $_ENV['DB_PASSWORD'];
         $this->port = $_ENV['PORT'];
-        $dsn = "pgsql:host={$this->host};dbname={$this->db};port={$this->port}";
-        self::$pdo = new PDO($dsn, $this->user, $this->pass);
+        $dsn = "pgsql:host=$this->host;port=$this->port;dbname=$this->db";
         try {
+            self::$pdo = new PDO($dsn, $this->user, $this->pass);
             echo "Connected to the database";
         } catch (PDOException $e) {
             $this->error = $e->getMessage();
