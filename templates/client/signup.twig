@@ -41,7 +41,87 @@
         <main class="flex-grow flex items-center justify-center p-4">
           <div class="w-full max-w-md">
             
-           
+           <div class="space-y-6" >
+      <div class="space-y-2 text-center">
+        <h1 class="text-3xl font-bold tracking-tight glow">Create an account</h1>
+        <p class="text-gray-400">Enter your details below to create your account</p>
+      </div>
+      <div class="space-y-4">
+        <form onSubmit="onSubmit()" class="space-y-4">
+          <div class="grid gap-4">
+            <div class="grid gap-2">
+              <Label htmlFor="name">Full Name</Label>
+              <input
+                id="name"
+                placeholder="John Doe"
+                type="text"
+                autoCapitalize="none"
+                autoCorrect="off"
+                class="bg-black/40 border-white/10 focus:border-[#a56bf0]/50 focus:ring-[#a56bf0]/50"
+                required
+              />
+            </div>
+            <div class="grid gap-2">
+              <Label htmlFor="email">Email</Label>
+              <input
+                id="email"
+                placeholder="m@example.com"
+                type="email"
+                autoCapitalize="none"
+                autoComplete="email"
+                autoCorrect="off"
+                class="bg-black/40 border-white/10 focus:border-[#a56bf0]/50 focus:ring-[#a56bf0]/50"
+                required
+              />
+            </div>
+            <div class="grid gap-2">
+              <Label htmlFor="password">Password</Label>
+              <input
+                id="password"
+                type="password"
+                class="bg-black/40  focus:border-[#a56bf0]/50 focus:ring-[#a56bf0]/50"
+                required
+              />
+            </div>
+            <div class="grid gap-2">
+              <Label htmlFor="confirm-password">Confirm Password</Label>
+              <input
+                id="confirm-password"
+                type="password"
+                class="bg-black/40 border-white/10 focus:border-[#a56bf0]/50 focus:ring-[#a56bf0]/50"
+                required
+              />
+            </div>
+          </div>
+          <Button type="submit" class="w-full bg-[#a56bf0] text-black hover:bg-[#a56bf0]/90" disabled={isLoading}>
+            Create Account
+          </Button>
+        </form>
+        <div class="relative">
+          <div class="absolute inset-0 flex items-center">
+            <div class="w-full border-t border-white/10"></div>
+          </div>
+          <div class="relative flex justify-center text-xs uppercase">
+            <span class="bg-background px-2 text-gray-400">Or continue with</span>
+          </div>
+        </div>
+        <Button
+          variant="outline"
+          class="w-full border-white/10 hover:border-white/20 bg-black/40"
+        
+        >
+          Google
+        </Button>
+      </div>
+      <div class="text-center text-sm">
+        <span class="text-gray-400">
+          Already have an account?
+          <Link href="/auth/signin" class="text-[#a56bf0] hover:text-[#a56bf0]/90 transition-colors">
+            Sign in
+          </Link>
+        </span>
+      </div>
+    </div>
 
           </div>
         </main>
