@@ -1,10 +1,9 @@
 <?php
 
+require_once realpath($_SERVER['DOCUMENT_ROOT'] . '/../') . '/vendor/autoload.php';
+use App\Core\Router;
 
-$routes = [
-    '/' => [ContollerTemplate::class, 'home.php'],
-    '/about' => 'about.php',
-    '/contact' => 'contact.php'
-]
+$Router = new Router();
+$Router->dispatch();
 
 ?>
