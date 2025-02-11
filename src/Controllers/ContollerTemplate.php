@@ -3,6 +3,7 @@
 namespace App\Controllers;
 
 use App\Controllers\TwigController;
+use App\Core\Database;
 
 class ContollerTemplate extends TwigController{
     
@@ -26,5 +27,8 @@ class ContollerTemplate extends TwigController{
     }
     public function Test(){
         echo 'Welcome to test';
+    }
+    public function Dbconnection(){
+        Database::getConnection();
     }
 }

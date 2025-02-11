@@ -16,6 +16,7 @@ class Routes{
                     'name' => 'int'
                 ]),
                 new Route(uri:'/dashboard', contoller:ContollerTemplate::class,method:'Dashboard'),
+                new Route(uri:'/dbconnection', contoller:ContollerTemplate::class,method:'Dbconnection'),
                 new Route(uri:'/events', contoller:ContollerTemplate::class,method:'Events'),
                 new Route(uri:'/signin',contoller:ContollerTemplate::class,method:'Signin'),
                 new Route(uri:'/signup',contoller:ContollerTemplate::class,method:'Signup'),
