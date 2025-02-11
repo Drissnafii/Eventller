@@ -1,0 +1,25 @@
+services:
+  postgres:
+    image: postgres:17
+    container_name: postgreseventler
+    restart: always
+    environment:
+      POSTGRES_DB: eventler
+      POSTGRES_USER: eventler
+      POSTGRES_PASSWORD: eventler
+    ports:
+      - "5433:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+  php:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: Eventler
+    restart: always
+    volumes:
+      - ./:/var/www/html
+    ports:
+      - "85:80"
+volumes:
+  postgres_data:

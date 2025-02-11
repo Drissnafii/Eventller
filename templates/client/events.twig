@@ -49,68 +49,58 @@
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           <!--
             Event 1 -->  
-          <div
-              class="gradient-border group cursor-pointer">
-              <a href='/events/8'>
-                <div class="p-4 space-y-4">
-                  <div class="relative h-48 overflow-hidden rounded">
-                    <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent z-10" ></div>
-                    <img
-                      src="https://i.ibb.co/YT7KJtFB/pexels-wendywei-1190297.jpg"
-                      alt='title'
-                      class="w-full h-full object-cover transition-transform duration-300 group-hover:scale-110"
-                    />
-                    <span class="absolute top-2 right-2 z-20 bg-[#00E599]/90 text-black px-2 py-1 rounded text-sm">
-                      Party and Tech
-                    </span>
+            {# {% for ev in events %} #}
+         <!-- Replace the static event card with this dynamic loop -->
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+              {% for event in events %}
+              <div class="gradient-border group cursor-pointer">
+                <a href='/events/{{ event.id }}'></a>
+                  <div class="p-4 space-y-4">
+                    <div class="relative h-48 overflow-hidden rounded">
+                      <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent z-10"></div>
+                      <img
+                        src="{{ event.image_url }}"
+                        alt="{{ event.title }}"
+                        class="w-full h-full object-cover transition-transform duration-300 group-hover:scale-110"
+                      />
+                      <span class="absolute top-2 right-2 z-20 bg-[#00E599]/90 text-black px-2 py-1 rounded text-sm"></span>
+                        {{ event.category }}
+                      </span>
+                    </div>
+                    <div>
+                      <h3 class="text-xl font-semibold group-hover:text-[#a56bf0] transition-colors">
+                        {{ event.title }}
+                      </h3>
+                      <p class="text-gray-400 mt-2">{{ event.date }}</p>
+                      <p class="text-gray-400">{{ event.location }}</p>
+                    </div>
                   </div>
-                  <div>
-                    <h3 class="text-xl font-semibold group-hover:text-[#a56bf0] transition-colors">
-                      UM6P Party
-                    </h3>
-                    <p class="text-gray-400 mt-2">date</p>
-                    <p class="text-gray-400">location</p>
-                  </div>
-                </div>
-              </a>
-            </div>
- <!--
-            Event 2 -->  
-            <div
-            class="gradient-border group cursor-pointer">
-            <a href='/events/8'>
-              <div class="p-4 space-y-4">
-                <div class="relative h-48 overflow-hidden rounded">
-                  <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent z-10" ></div>
-                  <img
-                    src="https://i.ibb.co/YT7KJtFB/pexels-wendywei-1190297.jpg"
-                    alt='title'
-                    class="w-full h-full object-cover transition-transform duration-300 group-hover:scale-110"
-                  />
-                  <span class="absolute top-2 right-2 z-20 bg-[#00E599]/90 text-black px-2 py-1 rounded text-sm">
-                    Party and Tech
-                  </span>
-                </div>
-                <div>
-                  <h3 class="text-xl font-semibold group-hover:text-[#a56bf0] transition-colors">
-                    UM6P Party
-                  </h3>
-                  <p class="text-gray-400 mt-2">date</p>
-                  <p class="text-gray-400">location</p>
-                </div>
+                </a>
               </div>
-            </a>
-          </div>
-        </div>
+              {% endfor %}
+            </div>
 
-        <div class="mt-12 flex justify-center gap-4">
-          <Button variant="outline" class="border-[#00E599]/20 hover:border-[#00E599]/40">
-            Previous
-          </Button>
-          <Button variant="outline" class="border-[#00E599]/20 hover:border-[#00E599]/40">
-            Next
-          </Button>
-        </div>
+            <!-- pagination -->
+            <div class="mt-12 flex justify-center gap-4">
+          
+              {% if currentPage > 1 %}
+              <a href="?limit={{ app.request.get('limit') }}&offset={{ (currentPage - 2) * app.request.get('limit') }}"
+                class="px-4 py-2 border border-[#00E599]/20 hover:border-[#00E599]/40 rounded">
+                Previous
+              </a>
+              {% endif %}
+              
+              {% if currentPage < totalPages %}
+              <a href="?limit={{ app.request.get('limit') }}&offset={{ currentPage * app.request.get('limit') }}"
+                class="px-4 py-2 border border-[#00E599]/20 hover:border-[#00E599]/40 rounded">
+                Next
+              </a>
+              {% endif %}
+              
+              <span class="text-gray-400">
+                Page {{ currentPage }} of {{ totalPages }}
+              </span>
+            </div>
       </div>
     </div>
     </main>

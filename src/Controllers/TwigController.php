@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Controllers;
 
 use Twig\Environment;
@@ -12,7 +13,7 @@ abstract class TwigController{
     protected $twig;
     public function __construct()
     {
-        $loader = new FilesystemLoader(realpath($_SERVER["DOCUMENT_ROOT"] . '/../') .'\templates');
+        $loader = new FilesystemLoader(realpath($_SERVER["DOCUMENT_ROOT"] . '/../') .'/templates');
         $twig = new \Twig\Environment($loader, [
             //'cache' => realpath($_SERVER["DOCUMENT_ROOT"].'/src/cache'),    
         ]);

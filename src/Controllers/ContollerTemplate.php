@@ -1,8 +1,8 @@
 <?php
-
 namespace App\Controllers;
-
+use App\Repositories\EventRepository;
 use App\Controllers\TwigController;
+use App\Core\Database;
 
 class ContollerTemplate extends TwigController{
     
@@ -22,6 +22,22 @@ class ContollerTemplate extends TwigController{
         echo $this->twig->render('admin/dashborad.twig', []);
     }
     public function Events(){
-        echo $this->twig->render('client/events.twig', []);
+
+        $getAllEvents = new EventRepository();
+        $count = $getAllEvents->getEventnumber();
+        $limit = isset($_GET["limit"]) ? $_GET["limit"] : 10;
+        $offset = isset($_GET["offset"]) ? $_GET["offset"] : 0;
+        $events = $getAllEvents->findAll($limit, $offset);
+        
+        echo $this->twig->render('client/events.twig',[
+            "events" => $events,
+            "count" => $count,
+        ]);
+    }
+    public function Test(){
+        echo 'Welcome to test';
+    }
+    public function Dbconnection(){
+        Database::getConnection();
     }
 }
