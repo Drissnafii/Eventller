@@ -3,6 +3,7 @@
 namespace App\Controllers;
 
 use App\Repositories\UserRepository;
+use App\Models\User;
 
 
 class UserController {
@@ -19,8 +20,10 @@ class UserController {
             $avatar = $_POST['avatar'];
             $role = $_POST['role'];
             $isActive = $_POST['isActive'];
+            
+            $user = new User(id: null, name: $name, email: $email, password: $password, avatar: $avatar, role: $role, isActive: $isActive);
         
-            if ($this->userModel->register($name, $email, $password, $avatar, $role, $isActive)) {
+            if ($this->userModel->register($user)) {
                 $_SESSION['registered'] = true;
                 header("Location: /signin");
                 exit;
