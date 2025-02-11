@@ -24,4 +24,7 @@ class ContollerTemplate extends TwigController{
     public function Events(){
         echo $this->twig->render('client/events.twig', []);
     }
+    public function Test(){
+        echo 'Welcome to test';
+    }
 }
