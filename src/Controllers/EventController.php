@@ -88,6 +88,13 @@ class EventRepository {
     }
 
     public function findAll(): array {
+        if(isset($_GET["limit"]) && isset($_GET["offset"])){
+            $limit = $_GET["limit"];
+            $offset = $_GET["offset"];
+            $sql = "SELECT * FROM events LIMIT $limit OFFSET $offset";
+        } else {
+            $sql = "SELECT * FROM events";
+        }
         $sql = "SELECT * FROM events";
         $stmt = $this->db->query($sql);
         $events = [];

@@ -22,6 +22,7 @@ class ContollerTemplate extends TwigController{
         echo $this->twig->render('admin/dashborad.twig', []);
     }
     public function Events(){
+        
         echo $this->twig->render('client/events.twig', []);
     }
 }
