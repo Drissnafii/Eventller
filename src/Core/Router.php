@@ -2,6 +2,7 @@
 namespace App\Core;
 use Config\Routes;
 use App\Controllers\TwigController;
+use App\Core\AuthController;
 class Router extends TwigController{
 
     public array $routes ;
@@ -34,6 +35,7 @@ class Router extends TwigController{
                 //     $Found= true;
                 //     break;
                 // }
+                $AuthController = new AuthController($class , $method);
                 $controller->$method($request);
                 $Found = true;
                 break;
@@ -41,6 +43,10 @@ class Router extends TwigController{
         }
         if(!$Found) echo $this->twig->render('pagenotfound.twig', ['message' => "Page Not Found 404"]);
     
+    }
+    public function ValidateInput($input){
+       
+        return $input;
     }
 }
 

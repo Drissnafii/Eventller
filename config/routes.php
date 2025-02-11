@@ -11,7 +11,9 @@ class Routes{
     public static function load(){
         self::$routes = [
             'GET' => [
-                new Route(uri:'/', contoller:ContollerTemplate::class ,method:'Home'),
+                new Route(uri:'/', contoller:ContollerTemplate::class ,method:'Home', parametres:[
+                    'name' => 'Home'
+                ]),
                 new Route(uri:'/dashboard', contoller:ContollerTemplate::class,method:'Dashboard'),
                 new Route(uri:'/signin',contoller:ContollerTemplate::class,method:'Signin'),
                 new Route(uri:'/signup',contoller:ContollerTemplate::class,method:'Signup'),
