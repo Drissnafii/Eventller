@@ -16,7 +16,7 @@ class User {
         $this->name = $name;
         $this->email = $email;
         $this->password = $password;
-        $this->$avatar = $avatar;
+        $this->avatar = $avatar;
         $this->role = $role;
         $this->isActive = $isActive;
     }

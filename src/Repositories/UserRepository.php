@@ -20,10 +20,15 @@ class UserRepository {
         $dbUser = $stmt->fetch(\PDO::FETCH_ASSOC);
 
         if ($dbUser && password_verify($user->getPassword(), $dbUser['password'])) {
-            $authenticatedUser = new User();
-            foreach ($dbUser as $key => $value) {
-                $authenticatedUser->$key = $value;
-            }
+            $authenticatedUser = new User(
+                id: $dbUser['id'],
+                name: $dbUser['name'],
+                email: $dbUser['email'],
+                password: $dbUser['password'],
+                avatar: $dbUser['avatar'],
+                role: $dbUser['role'],
+                isActive: $dbUser['isActive']
+            );
             return $authenticatedUser;
         }
 
@@ -40,8 +45,16 @@ class UserRepository {
         $stmt->bindValue(':password', $hashedPassword, \PDO::PARAM_STR);
         $stmt->bindValue(':avatar', $user->getAvatar(), \PDO::PARAM_STR);
         $stmt->bindValue(':role', $user->getRole(), \PDO::PARAM_STR);
-        $stmt->bindValue(':isActive', $user->getIsActive(), \PDO::PARAM_BOOL);
+        $stmt->bindValue(':isActive', (int)$user->getIsActive(), \PDO::PARAM_INT);
         return $stmt->execute();
+
+        // if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+        //     die("Invalid email format.");
+        // }
+        // if (strlen($password) < 8) {
+        //     die("Password must be at least 8 characters long.");
+        // }
+        
     }
 
 
