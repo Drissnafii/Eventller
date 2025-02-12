@@ -3,23 +3,23 @@
 namespace App\Repositories;
 
 use App\Models\User;
-use PDO;
+use App\Core\Database;
 
 class UserRepository {
     private $pdo;
 
-    public function __construct(\PDO $pdo) {
-        $this->pdo = $pdo;
+    public function __construct() {
+        $this->pdo = Database::getConnection();
     }
 
     public function login(User $user): ?User {
         $stmt = $this->pdo->prepare('SELECT * FROM users WHERE email = :email LIMIT 1');
-        $stmt->bindValue(':email', $user->email, \PDO::PARAM_STR);
+        $stmt->bindValue(':email', $user->getEmail(), \PDO::PARAM_STR);
         $stmt->execute();
 
         $dbUser = $stmt->fetch(\PDO::FETCH_ASSOC);
 
-        if ($dbUser && password_verify($user->password, $dbUser['password'])) {
+        if ($dbUser && password_verify($user->getPassword(), $dbUser['password'])) {
             $authenticatedUser = new User();
             foreach ($dbUser as $key => $value) {
                 $authenticatedUser->$key = $value;
