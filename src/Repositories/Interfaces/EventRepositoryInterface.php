@@ -2,7 +2,7 @@
 
 namespace App\Repositories\Interfaces;
 
-use Event;
+use App\Models\Event;
 
 interface EventRepositoryInterface {
     public function findAll(int $offset): array;

@@ -4,7 +4,7 @@ namespace App\Repositories;
 use App\Core\Database;
 use PDO;
 use DateTime;
-use Event;
+use App\Models\Event;
 use App\Repositories\Interfaces\EventRepositoryInterface;
 
 class EventRepository implements EventRepositoryInterface {
@@ -16,17 +16,37 @@ class EventRepository implements EventRepositoryInterface {
     }
 
     public function findAll(int $offset): array {
-        $query = "SELECT * FROM events LIMIT 8 OFFSET :offset";
+        $query = "SELECT 
+                    e.id,
+                    e.title,
+                    e.image,
+                    c.name as category,
+                    TO_CHAR(e.datetime, 'YYYY-MM-DD HH:MI') as date,
+                    e.location
+                FROM events e
+                LEFT JOIN categories c ON e.category_id = c.id
+                LIMIT 6
+                OFFSET :offset ";
         $stmt = $this->db->prepare($query);
         $stmt->bindValue(':offset', $offset, PDO::PARAM_INT);
         $stmt->execute();
         
         $events = [];
         while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
-            $events[] = $this->createEventFromRow($row);
+            $events[] = [
+                "id"=>$row['id'],
+                "title"=>$row['title'],
+                "image"=>$row['image'],
+                "date"=>new DateTime($row['date']),
+                "location"=>$row['location'],
+                "category"=>$row['category']
+            ];;
         }
-
-        return $events;
+        $data = [
+            "count" => $this->getEventnumber(),
+            "events" => $events,
+        ];
+        return $data;
     }
 
     public function getEventnumber(): int {

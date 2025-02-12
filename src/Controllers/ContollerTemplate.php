@@ -21,16 +21,8 @@ class ContollerTemplate extends TwigController{
     public function Dashboard(){
         echo $this->twig->render('admin/dashborad.twig', []);
     }
-    public function Events(){
-        $getAllEvents = new EventRepository();
-        $count = $getAllEvents->getEventnumber();
-        $offset = isset($_GET["page"]) ? $_GET["page"] : 8;
-        $events = $getAllEvents->findAll($offset);
-        
-        echo $this->twig->render('client/events.twig',[
-            "events" => $events,
-            "count" => $count,
-        ]);
+    public function events(){
+        echo $this->twig->render('client/events.twig',[]);
     }
     public function Test(){
         echo 'Welcome to test';
