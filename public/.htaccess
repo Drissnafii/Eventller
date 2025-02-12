@@ -1,0 +1,13 @@
+# Activer la réécriture d'URL
+RewriteEngine On
+
+# Définir le fichier index par défaut
+# DirectoryIndex index.php
+
+# Rediriger toutes les requêtes vers index.php sauf si le fichier ou le dossier existe
+
+
+RewriteBase /
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^(.*)$ index.php [QSA,L]

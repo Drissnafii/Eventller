@@ -1,4 +1,4 @@
-<?php
+<?php 
 
 
 namespace App\Models;
@@ -37,6 +37,10 @@ class User {
     public function setAvatar($avatar) { $this->avatar = $avatar; }
     public function setRole($role) { $this->role = $role; }
     public function setIsActive($isActive) { $this->isActive = $isActive; }
+<<<<<<< HEAD
+=======
+    
+>>>>>>> 74556388570bc9e367282ce7652cc86a355c9e98
 }
 
 ?>

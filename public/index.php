@@ -1,14 +1,9 @@
 <?php
 
-require $_SERVER['DOCUMENT_ROOT'] . '/vendor/autoload.php';
+require_once realpath($_SERVER['DOCUMENT_ROOT'] . '/../') . '/vendor/autoload.php';
 use App\Core\Router;
 
 $Router = new Router();
-$Router->get('/', 'HomeController@index');
-$Router->get('/', 'HomeController@index');
-$Router->get('/', 'HomeController@index');
-$Router->get('/', 'HomeController@index');
-$Router->get('/', 'HomeController@index');
-$Router->get('/', 'HomeController@index');
+$Router->dispatch();
 
 ?>
