@@ -8,16 +8,16 @@ use Event;
 use App\Repositories\Interfaces\EventRepositoryInterface;
 
 class EventRepository implements EventRepositoryInterface {
+
     private $db;
 
     public function __construct() {
         $this->db = Database::getConnection();
     }
 
-    public function findAll(int $limit, int $offset): array {
-        $query = "SELECT * FROM events LIMIT :limit OFFSET :offset";
+    public function findAll(int $offset): array {
+        $query = "SELECT * FROM events LIMIT 8 OFFSET :offset";
         $stmt = $this->db->prepare($query);
-        $stmt->bindValue(':limit', $limit, PDO::PARAM_INT);
         $stmt->bindValue(':offset', $offset, PDO::PARAM_INT);
         $stmt->execute();
         
@@ -28,6 +28,7 @@ class EventRepository implements EventRepositoryInterface {
 
         return $events;
     }
+
     public function getEventnumber(): int {
         $query = "SELECT COUNT(*) FROM events";
         $stmt = $this->db->prepare($query);
