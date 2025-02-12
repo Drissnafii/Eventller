@@ -17,7 +17,9 @@ class Routes{
                 new Route(uri:'/signup',contoller:ContollerTemplate::class,method:'Signup'),
                 new Route(uri:'/forgotpassword',contoller:ContollerTemplate::class,method:'Forgotpassword')
             ],
-            'POST' => [] ,
+            'POST' => [
+                new Route(uri:'/home', contoller:ContollerTemplate::class,method:'Home')
+            ] ,
             'PUT' => [] ,
             'DELETE' => [] ,
             'PATCH' => [] ,
