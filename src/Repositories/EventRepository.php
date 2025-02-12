@@ -37,7 +37,7 @@ class EventRepository implements EventRepositoryInterface {
                 "id"=>$row['id'],
                 "title"=>$row['title'],
                 "image"=>$row['image'],
-                "date"=>new DateTime($row['date']),
+                "date"=>$row['date'],
                 "location"=>$row['location'],
                 "category"=>$row['category']
             ];;
@@ -56,13 +56,39 @@ class EventRepository implements EventRepositoryInterface {
         return $stmt->fetchColumn();
     }
 
-    public function findById(int $id): ?Event {
-        $query = "SELECT * FROM events WHERE id = :id";
+    public function findById(int $id): ?array {
+          $query = "SELECT 
+                        e.id,
+                        e.title,
+                        e.description,
+                        e.image,
+                        e.datetime,
+                        e.location,
+                        e.places,
+                        e.price,
+                        c.name AS category_name,
+                        ROUND(((e.places - COUNT(t.id)) * 100.0 / e.places), 2) AS remaining_percentage
+                    FROM events e
+                    JOIN categories c ON e.category_id = c.id
+                    LEFT JOIN tickets t ON e.id = t.eventId
+                    WHERE e.id = :id
+                    GROUP BY e.id, c.name";
         $stmt = $this->db->prepare($query);
         $stmt->execute(['id' => $id]);
         
         $row = $stmt->fetch(PDO::FETCH_ASSOC);
-        return $row ? $this->createEventFromRow($row) : null;
+        return $row ? [
+            "id"=>$row['id'],
+            "title"=>$row['title'],
+            "description"=>$row['description'],
+            "image"=>$row['image'],
+            "date"=>$row['datetime'],
+            "places"=>$row['places'],
+            "price"=>$row['price'],
+            "location"=>$row['location'],
+            "percentage"=>$row['remaining_percentage'],
+            "category"=>$row['category_name']
+        ] : null;
     }
 
     public function create(Event $event): bool {

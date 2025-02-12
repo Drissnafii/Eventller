@@ -23,6 +23,13 @@ class ContollerTemplate extends TwigController{
     }
     public function events(){
         echo $this->twig->render('client/events.twig',[]);
+    }    
+    public function eventdet(){
+        $event = new EventRepository();
+        $data = $event->findById($_GET['eventId']);
+        echo $this->twig->render('client/eventdet.twig',[
+            'event'=>$data
+        ]);
     }
     public function Test(){
         echo 'Welcome to test';

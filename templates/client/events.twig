@@ -9,33 +9,27 @@
   
 </head>
 <body class='flex flex-col min-h-screen bg-black text-white'>
-    <nav class="border-b border-white/10 bg-[#131415] backdrop-blur-xl">
-      <div class="max-w-7xl mx-auto px-4">
-        <div class="flex justify-between items-center h-16">
-          <div class="flex items-center">
-            <a href="/" class="text-white font-bold text-xl glow">
-              Eventler
+  <nav class="sticky top-0 z-50 backdrop-blur-lg bg-black/20 border-b border-gray-800">
+    <div class="max-w-7xl mx-auto px-6">
+        <div class="flex items-center justify-between h-16">
+            <a href="/" class="text-2xl font-bold bg-gradient-to-r from-purple-400 to-pink-600 bg-clip-text text-transparent">
+                Eventler
             </a>
-          </div>
-          <div class="hidden md:flex items-center space-x-8">
-            <a href="/" class="text-gray-300 hover:text-white transition duration-300">
-              Home
-            </a>
-            <a href="/events" class="text-gray-300 hover:text-white transition duration-300">
-              Events
-            </a>
-            <a href="/signin">
-              <Button class="text-gray-300 hover:bg-transparent bg-transparent hover:text-white">
-                Sign In
-              </Button>
-            </a>
-            <a href="/signup">
-              <Button class="bg-[#a56bf0] text-black hover:bg-[#6d499c]/94 rounded-md">Sign Up</Button>
-            </a>
-          </div>
+            <div class="hidden md:flex items-center gap-8">
+                <a href="/" class="text-sm text-gray-300 hover:text-white transition-colors">Home</a>
+                <a href="/events" class="text-sm text-gray-300 hover:text-white transition-colors">Events</a>
+                <div class="flex items-center gap-4">
+                    <a href="/signin" class="text-sm px-4 py-2 rounded-lg border border-gray-700 hover:border-gray-600 transition-colors">
+                        Sign In
+                    </a>
+                    <a href="/signup" class="text-sm px-4 py-2 rounded-lg bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600 text-white transition-colors">
+                        Sign Up
+                    </a>
+                </div>
+            </div>
         </div>
-      </div>
-    </nav>
+    </div>
+</nav>
 
     <main class="flex-grow flex justify-center items-center">
         <div class="min-h-screen py-12">
@@ -124,13 +118,13 @@
 
 
     <script>
-      let currentPage = 1;
+      let currentPage =   1;
       const itemsPerPage = 6;
 
       function loadEvents(page) {
         currentPage = page;
         const eventsContainer = document.getElementById('events-container');
-        fetch(`/getevents?offset=${currentPage}`)
+        fetch(`/getevents?offset=${currentPage*itemsPerPage}`)
           .then(response => {
             if (!response.ok) {
               throw new Error('Failed to load events');
@@ -143,7 +137,7 @@
               data.events.forEach(event => {
                 eventsContainer.innerHTML += `
                     <div class="gradient-border group cursor-pointer">
-                    <a href="/event/${event.id}">
+                    <a href="/eventdet?eventId=${event.id}">
                       <div class="p-4 space-y-4">
                       <div class="relative h-48 overflow-hidden rounded">
                         <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent z-10">

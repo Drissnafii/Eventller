@@ -5,6 +5,7 @@ CREATE TABLE events (
     location VARCHAR(255) NOT NULL,
     datetime TIMESTAMP NOT NULL,
     image TEXT DEFAULT '',
+    price DECIMAL(10, 2) NOT NULL,
     userId INT,
     eventId INT,
     category_id int , 
