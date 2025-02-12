@@ -13,33 +13,44 @@ class UserController {
     }
 
     public function register() {
-        if ($_SERVER["REQUEST_METHOD"] == "POST") {
+        if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
-            $name = htmlspecialchars(strip_tags($_POST['name']));
-            $email = filter_var($_POST['email'], FILTER_SANITIZE_EMAIL);
-            $password = password_hash($_POST['password'], PASSWORD_DEFAULT);
-            $avatar = filter_var($_POST['avatar'], FILTER_SANITIZE_URL);
-            $role = htmlspecialchars(strip_tags($_POST['role']));
-            $isActive = filter_var($_POST['isActive'], FILTER_VALIDATE_BOOLEAN);
-
-
-            // $name = $_POST['name'];
-            // $email = $_POST['email'];
-            // $password = $_POST['password'];
-            // $avatar = $_POST['avatar'];
-            // $role = $_POST['role'];
-            // $isActive = $_POST['isActive'];
-
-            $user = new User(id: null, name: $name, email: $email, password: $password, avatar: $avatar, role: $role, isActive: $isActive);
-
-            if ($this->userModel->register($user)) {
-                $_SESSION['registered'] = true;
-                header("Location: /signin");
+            $input = json_decode(file_get_contents("php://input"), true);
+            
+            if (!$input) {
+                echo json_encode(["status" => "error", "message" => "Invalid input"]);
                 exit;
-
             }
+
+            $name = htmlspecialchars(strip_tags($input['name'] ?? ''));
+            $email = filter_var($input['email'] ?? '', FILTER_SANITIZE_EMAIL);
+            $password = $input['password'] ?? '';
+            $avatar = filter_var($input['avatar'] ?? '', FILTER_SANITIZE_URL);
+            $role = htmlspecialchars(strip_tags($input['role'] ?? 'user'));
+            $isActive = filter_var($input['isActive'] ?? true, FILTER_VALIDATE_BOOLEAN);
+
+            if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+                echo json_encode(["status" => "error", "message" => "Invalid email format"]);
+                exit;
+            }
+
+            if (strlen($password) < 8) {
+                echo json_encode(["status" => "error", "message" => "Password must be at least 8 characters"]);
+                exit;
+            }
+
+            $user = new User(null, $name, $email, $password, $avatar, $role, $isActive);
+    
+            if ($this->userModel->register($user)) {
+                echo json_encode(["status" => "success", "message" => "User registered successfully"]);
+            } else {
+                echo json_encode(["status" => "error", "message" => "Registration failed"]);
+            }
+            
+            exit;
         }
     }
+    
 
 }
 
