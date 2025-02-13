@@ -1,37 +1,35 @@
 services:
-  postgres:
-    image: postgres:17
-    container_name: postgreseventler
-    restart: always
-    environment:
-      POSTGRES_DB: eventler
-      POSTGRES_USER: eventler
-      POSTGRES_PASSWORD: eventler
-    ports:
-      - "5433:5432"
-    volumes:
-      - postgres_data:/var/lib/postgresql/data
+    postgres:
+      image: postgres:17
+      container_name: eventlerdb
+      restart: always
+      environment:
+        POSTGRES_DB: eventlerdb
+        POSTGRES_USER: eventlerdb
+        POSTGRES_PASSWORD: eventlerdb
+      ports:
+        - "5434:5432"
+      volumes:
+        - postgres_data:/var/lib/postgresql/data
 
-  pgadmin:
-    container_name: pgadmin4eventler
-    image: dpage/pgadmin4
-    restart: always
-    environment:
-      PGADMIN_DEFAULT_EMAIL: "admin@example.com"  
-      PGADMIN_DEFAULT_PASSWORD: "admin123"        
-    ports:
-      - "5050:80"  
-
-  php:
-    build:
-      context: .
-      dockerfile: Dockerfile
-    container_name: Eventler
-    restart: always
-    volumes:
-      - ./:/var/www/html
-    ports:
-      - "85:80"
-
+    pgadmin:
+      container_name: pgadmin4eventler
+      image: dpage/pgadmin4
+      restart: always
+      environment:
+        PGADMIN_DEFAULT_EMAIL: "admin@gmail.com"
+        PGADMIN_DEFAULT_PASSWORD: "admin"  
+      ports:
+        - "5070:80"  
+    php:
+      build:
+        context: .
+        dockerfile: Dockerfile
+      container_name: EventlerPlatform
+      restart: always
+      volumes:
+        - ./:/var/www/html
+      ports:
+        - "88:80"
 volumes:
   postgres_data:
