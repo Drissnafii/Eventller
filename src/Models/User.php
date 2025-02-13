@@ -1,12 +1,8 @@
-<?php
-
+<?php 
 
 namespace App\Models;
-use App\Core\Database;
 
 class User {
-    private $db;
-
     protected $id;
     protected $name;
     protected $email;
@@ -15,11 +11,10 @@ class User {
     protected $role;
     protected $isActive;
 
-    public function __construct($id, $name, $email, $password, $avatar, $role, $isActive){
-        $this->db = Database::getConnection();
-
+    public function __construct($id = null, $name = null, $email = null, $password = null, $avatar = null, $role = null, $isActive = null){
         $this->id = $id;
         $this->name = $name;
+        $this->email = $email;
         $this->password = $password;
         $this->$avatar = $avatar;
         $this->role = $role;
@@ -41,20 +36,6 @@ class User {
     public function setAvatar($avatar) { $this->avatar = $avatar; }
     public function setRole($role) { $this->role = $role; }
     public function setIsActive($isActive) { $this->isActive = $isActive; }
-
-    public function register($name, $email, $password, $avatar, $role, $isActive) {
-        $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
-
-        $stmt = $this->db->prepare("INSERT INTO users (name, email, password, avatar, role, isActive) 
-                                    VALUES (:name, :email, :password, :avatar, :role, :isActive)");
-        $stmt->bindParam(':name', $name, \PDO::PARAM_STR);
-        $stmt->bindParam(':email', $email, \PDO::PARAM_STR);
-        $stmt->bindParam(':password', $hashedPassword, \PDO::PARAM_STR);
-        $stmt->bindParam(':avatar', $avatar, \PDO::PARAM_STR);
-        $stmt->bindParam(':role', $role, \PDO::PARAM_STR);
-        $stmt->bindParam(':isActive', $isActive, \PDO::PARAM_BOOL);
-        return $stmt->execute();
-    }
     
 }
 
