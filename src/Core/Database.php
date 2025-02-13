@@ -17,6 +17,7 @@ class Database {
         $dsn = "pgsql:host={$host};dbname={$db};port={$port}";
         try {
             self::$pdo = new \PDO($dsn, $user, $pass);
+            echo 'database connected';
         } catch (\PDOException $e) {
             $error = $e->getMessage();
             echo $error;
