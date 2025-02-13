@@ -3,12 +3,43 @@
 namespace App\Controllers;
 
 use App\Repositories\UserRepository;
-use App\Models\User;
 
 class UserController {
 
-    public function signup()
-    {
+    public function login() {
+        if ($_SERVER["REQUEST_METHOD"] === "POST") {
+            $email = $_POST["email"] ?? "";
+            $password = $_POST["password"] ?? "";
+
+            if (empty($email) || empty($password)) {
+                echo json_encode(["success" => false, "message" => "Email and password are required!"]);
+                return;
+            }
+
+            if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+                echo json_encode(["success" => false, "message" => "Invalid email format"]);
+                return;
+            }
+
+            $userRepo = new UserRepository();
+            $user = $userRepo->userAccsses($email, $password);
+
+            if($user && password_verify($password, $user['password'])) {
+                session_start();
+                $_SESSION["id"] = $user["id"];
+                $_SESSION["name"] = $user["name"];
+                $_SESSION["email"] = $user["email"];
+                $_SESSION["role"] = $user["role"];
+            } else {
+                echo json_encode(["success" => false, "message" => "Invalid credentials!"]);
+                return;
+            }
+
+            echo json_encode(["success" => true, "message" => "Login successful"]);
+        }
+    }
+
+    public function signup() {
         if ($_SERVER["REQUEST_METHOD"] === "POST") {
             $name = $_POST["name"] ?? "";
             $email = $_POST["email"] ?? "";

@@ -27,6 +27,7 @@ class Database {
         if(self::$pdo == null) {
             self::connect();
         }
+        
         return self::$pdo;
     }
 }

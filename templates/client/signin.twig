@@ -42,17 +42,17 @@
                     <p class="text-gray-400 text-sm">Enter your email to sign in to your account</p>
                 </div>
 
-                <form onSubmit="onSubmit()" class="space-y-6">
+                <form id="loginForm" method="POST" class="space-y-6">
                     <div class="space-y-4">
                         <div>
                             <label for="email" class="block text-sm font-medium text-gray-300 mb-1">Email</label>
-                            <input id="email" type="email" placeholder="m@example.com" required
+                            <input type="email" name="email" id="email" placeholder="m@example.com" required
                                 class="w-full px-4 py-2 bg-gray-800/50 border border-gray-700 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-colors placeholder-gray-500" />
                         </div>
 
                         <div>
                             <label for="password" class="block text-sm font-medium text-gray-300 mb-1">Password</label>
-                            <input id="password" type="password" required
+                            <input type="password" name="password" id="password" required
                                 class="w-full px-4 py-2 bg-gray-800/50 border border-gray-700 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-colors" />
                         </div>
 
@@ -70,8 +70,7 @@
                         </div>
                     </div>
 
-                    <button type="submit" 
-                        class="w-full py-2 px-4 bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600 rounded-lg font-medium transition-colors cursor-pointer" disabled={isLoading}>
+                    <button type="submit" class="w-full py-2 px-4 bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600 rounded-lg font-medium transition-colors cursor-pointer">
                         Sign In
                     </button>
 
@@ -145,6 +144,8 @@
             </div>
         </div>
     </footer>
+    <script src="./assets/js/userSignin.js"></script>
+
 </body>
 
 </html>
