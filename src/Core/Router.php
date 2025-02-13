@@ -22,7 +22,7 @@ class Router extends TwigController{
                 $class =  $r->contoller;
                 $parametres =  $r->parametres;
                 $method =  $r->method;
-                $request = ($methodHTTP == 'GET') ? $_GET : (json_decode(file_get_contents('php://input'), true) ?? $_POST);
+                $request = ($methodHTTP == 'GET' || $methodHTTP == 'DELETE') ? $_GET : (json_decode(file_get_contents('php://input'), true) ?? $_POST);
                 $AuthController = ValidationController::Validation($parametres ,$request );
                 if($AuthController){
                     $controller = new $class();
