@@ -17,6 +17,7 @@ class Routes{
                 new Route(uri:'/dbconnection', contoller:ContollerTemplate::class,method:'Dbconnection'),
                 new Route(uri:'/events', contoller:ContollerTemplate::class,method:'events'),
                 new Route(uri:'/eventdet', contoller:ContollerTemplate::class,method:'eventdet'),
+                new Route(uri:'/payment', contoller:ContollerTemplate::class,method:'payment'),
                 new Route(uri:'/signin',contoller:ContollerTemplate::class,method:'Signin'),
                 new Route(uri:'/signup',contoller:ContollerTemplate::class,method:'Signup'),
                 new Route(uri:'/forgotpassword',contoller:ContollerTemplate::class,method:'Forgotpassword'),

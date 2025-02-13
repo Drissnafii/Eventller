@@ -24,6 +24,9 @@ class ContollerTemplate extends TwigController{
     public function events(){
         echo $this->twig->render('client/events.twig',[]);
     }    
+    public function payment(){
+        echo $this->twig->render('client/payment.twig',[]);
+    }    
     public function eventdet(){
         $event = new EventRepository();
         $data = $event->findById($_GET['eventId']);
