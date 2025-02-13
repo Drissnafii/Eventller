@@ -26,13 +26,11 @@ class Routes{
             'POST' => [
                 new Route(uri:'/login',contoller:UserController::class,method:'login', parametres: [
                     'email' => 'email',
-                    'password' => 'string'
-                ]),
+                    'password' => 'string'])
             ] ,
             'PUT' => [] ,
             'DELETE' => [] ,
             'PATCH' => [] ,
-            
         ];
     }
     public static function getRoutes(){

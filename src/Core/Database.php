@@ -30,7 +30,3 @@ class Database {
         return self::$pdo;
     }
 }
-
-// new Database();
-// Database::getConnection();
-
