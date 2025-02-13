@@ -1,7 +1,7 @@
 services:
   postgres:
     image: postgres:17
-    container_name: postgreseventlerTwo
+    container_name: postgreseventler
     restart: always
     environment:
       POSTGRES_DB: eventler
@@ -13,7 +13,7 @@ services:
       - postgres_data:/var/lib/postgresql/data
 
   pgadmin:
-    container_name: pgadmin4eventlerTwo
+    container_name: pgadmin4eventler
     image: dpage/pgadmin4
     restart: always
     environment:

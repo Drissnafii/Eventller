@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>403 Forbidden - Eventler</title>
+    <script src="https://unpkg.com/@tailwindcss/browser@4"></script>
+</head>
+<body>
+  <div className="min-h-screen bg-gradient-to-br ">
+      <div className="container mx-auto px-4 py-8">
+        <div className="flex justify-between items-center mb-8">
+          <h1 className="text-4xl font-bold text-gray-200">Organizer Dashboard</h1>
+          <Button className="bg-white text-black rounded-md">Create New Event</Button>
+        </div>
+
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+            <div className="bg-transparenttext-white">
+              <div className="pb-2">
+                <div className="text-lg font-medium">Total Events</CardTitle>
+              </div>
+              <div>
+                <p className="text-3xl font-bold">12</p>
+              </div>
+            </div>
+
+             <div className="bg-transparenttext-white">
+              <div className="pb-2">
+                <div className="text-lg font-medium">Total Bookings</CardTitle>
+              </div>
+              <div>
+                <p className="text-3xl font-bold">2,500</p>
+              </div>
+            </div>
+
+             <div className="bg-transparenttext-white">
+              <div className="pb-2">
+                <div className="text-lg font-medium">Revenue</CardTitle>
+              </div>
+              <div>
+                <p className="text-3xl font-bold">$45,678</p>
+              </div>
+            </div>
+
+             <div className="bg-transparenttext-white">
+              <div className="pb-2">
+                <div className="text-lg font-medium">Avg. Attendance Rate</CardTitle>
+              </div>
+              <div>
+                <p className="text-3xl font-bold">87%</p>
+              </div>
+            </div>
+        </div>
+
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 mb-8">
+          <Card className="lg:col-span-2">
+            <CardHeader>
+              <CardTitle>Your Events</CardTitle>
+            </CardHeader>
+            <CardContent>
+              <div className="space-y-4">
+                 <div className="flex items-center justify-between p-4 bg-white rounded-lg shadow">
+                    <div>
+                      <h3 className="font-semibold text-lg">title</h3>
+                      <p className="text-sm text-gray-500">date</p>
+                    </div>
+                    <div className="text-right">
+                      <div>
+                        status
+                      </div>
+                      <p className="text-sm mt-1">
+                        15 booked
+                      </p>
+                    </div>
+                  </div>
+              </div>
+            </CardContent>
+          </Card>
+
+          <Card>
+            <CardHeader>
+              <CardTitle>Recent Bookings</CardTitle>
+            </CardHeader>
+            <CardContent>
+              <div className="space-y-4">
+                {recentBookings.map((booking) => (
+                  <div key={booking.id} className="flex items-center space-x-4">
+                    <Avatar>
+                      <AvatarImage src={`https://api.dicebear.com/6.x/initials/svg?seed=${booking.name}`} />
+                      <AvatarFallback>
+                        {booking.name
+                          .split(" ")
+                          .map((n) => n[0])
+                          .join("")}
+                      </AvatarFallback>
+                    </Avatar>
+                    <div>
+                      <p className="text-sm font-medium">{booking.name}</p>
+                      <p className="text-xs text-gray-500">{booking.event}</p>
+                    </div>
+                    <div className="ml-auto text-xs text-gray-500">{booking.time}</div>
+                  </div>
+                ))}
+              </div>
+            </CardContent>
+          </Card>
+        </div>
+
+        <Card>
+          <CardHeader>
+            <CardTitle>Booking Trends</CardTitle>
+          </CardHeader>
+          <CardContent>
+            <ResponsiveContainer width="100%" height={300}>
+              <BarChart data={bookingData}>
+                <CartesianGrid strokeDasharray="3 3" />
+                <XAxis dataKey="name" />
+                <YAxis />
+                <Tooltip />
+                <Legend />
+                <Bar dataKey="bookings" fill="#8884d8" />
+              </BarChart>
+            </ResponsiveContainer>
+          </CardContent>
+        </Card>
+      </div>
+    </div>
+</body>
+</html>
