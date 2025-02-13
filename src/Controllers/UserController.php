@@ -25,7 +25,6 @@ class UserController {
             $user = $userRepo->userAccsses($email, $password);
 
             if($user && password_verify($password, $user['password'])) {
-                session_start();
                 $_SESSION["id"] = $user["id"];
                 $_SESSION["name"] = $user["name"];
                 $_SESSION["email"] = $user["email"];

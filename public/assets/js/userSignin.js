@@ -26,7 +26,7 @@ document.addEventListener("DOMContentLoaded", function () {
             }
         } catch (error) {
             console.error("Error:", error);
-            alert("Something went wrong!");
+            alert("Something went wrong! : " + error);
         }
         
     });
