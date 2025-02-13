@@ -116,14 +116,15 @@
       </div>
     </footer>
 
+
     <script>
-      let currentPage =   0;
+      let currentPage =  1;
       const itemsPerPage = 6;
 
       function loadEvents(page) {
         currentPage = page;
         const eventsContainer = document.getElementById('events-container');
-        fetch(`/getevents?offset=${currentPage*itemsPerPage}`)
+        fetch(`/getevents?offset=${currentPage}`)
           .then(response => {
             if (!response.ok) {
               throw new Error('Failed to load events');
