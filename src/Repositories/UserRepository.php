@@ -9,51 +9,20 @@ class UserRepository {
     private $pdo;
 
     public function __construct() {
-        $this->pdo = Database::getConnection();
+        
     }
 
-    public function login(User $user): ?User {
-        $stmt = $this->pdo->prepare('SELECT * FROM users WHERE email = :email LIMIT 1');
-        $stmt->bindValue(':email', $user->getEmail(), \PDO::PARAM_STR);
-        $stmt->execute();
 
-        $dbUser = $stmt->fetch(\PDO::FETCH_ASSOC);
-
-        if ($dbUser && password_verify($user->getPassword(), $dbUser['password'])) {
-            $authenticatedUser = new User(
-                id: $dbUser['id'],
-                name: $dbUser['name'],
-                email: $dbUser['email'],
-                password: $dbUser['password'],
-                avatar: $dbUser['avatar'],
-                role: $dbUser['role'],
-                isActive: $dbUser['isActive']
-            );
-            return $authenticatedUser;
-        }
-
-        return null;
-    }
-
-    public function register(User $user) {
-        $hashedPassword = password_hash($user->getPassword(), PASSWORD_DEFAULT);
-
-        $stmt = $this->pdo->prepare("INSERT INTO users (name, email, password, avatar, role, isActive) 
-                                    VALUES (:name, :email, :password, :avatar, :role, :isActive)");
-        $stmt->bindValue(':name', $user->getName(), \PDO::PARAM_STR);
-        $stmt->bindValue(':email', $user->getEmail(), \PDO::PARAM_STR);
-        $stmt->bindValue(':password', $hashedPassword, \PDO::PARAM_STR);
-        $stmt->bindValue(':avatar', $user->getAvatar(), \PDO::PARAM_STR);
-        $stmt->bindValue(':role', $user->getRole(), \PDO::PARAM_STR);
-        $stmt->bindValue(':isActive', (int)$user->getIsActive(), \PDO::PARAM_INT);
-        return $stmt->execute();
-
-        // if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
-        //     die("Invalid email format.");
-        // }
-        // if (strlen($password) < 8) {
-        //     die("Password must be at least 8 characters long.");
-        // }
+    public function createUser($name, $email, $password, $role) {
+        $pdo = Database::getConnection();
+        $stmt = $pdo->prepare("INSERT INTO users (name, email, password, role) VALUES (:name, :email, :password, :role)");
+        $resultat = $stmt->execute([
+            ":name" => $name,
+            ":email" => $email,
+            ":password" => $password,
+            ":role" => $role
+        ]);
+        return $resultat ;
         
     }
 

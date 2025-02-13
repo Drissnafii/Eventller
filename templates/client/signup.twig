@@ -42,35 +42,30 @@
                     <p class="text-gray-400 text-sm">Enter your details below to create your account</p>
                 </div>
 
-                <form onSubmit="onSubmit()" class="space-y-6">
+                <form id="signupForm" method="POST">
+
                     <div class="space-y-4">
                         <div>
                             <label for="name" class="block text-sm font-medium text-gray-300 mb-1">Full Name</label>
-                            <input id="name" type="text" placeholder="John Doe" required
+                            <input id="name" name="name" type="text" placeholder="John Doe" required
                                 class="w-full px-4 py-2 bg-gray-800/50 border border-gray-700 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-colors placeholder-gray-500" />
                         </div>
 
                         <div>
                             <label for="email" class="block text-sm font-medium text-gray-300 mb-1">Email</label>
-                            <input id="email" type="email" placeholder="m@example.com" required
+                            <input id="email" name="email" type="email" placeholder="m@example.com" required
                                 class="w-full px-4 py-2 bg-gray-800/50 border border-gray-700 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-colors placeholder-gray-500" />
                         </div>
 
                         <div>
                             <label for="password" class="block text-sm font-medium text-gray-300 mb-1">Password</label>
-                            <input id="password" type="password" required
-                                class="w-full px-4 py-2 bg-gray-800/50 border border-gray-700 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-colors" />
-                        </div>
-
-                        <div>
-                            <label for="confirm-password" class="block text-sm font-medium text-gray-300 mb-1">Confirm Password</label>
-                            <input id="confirm-password" type="password" required
+                            <input id="password" name="password" type="password" required
                                 class="w-full px-4 py-2 bg-gray-800/50 border border-gray-700 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-colors" />
                         </div>
 
                         <div>
                             <label for="role" class="block text-sm font-medium text-gray-300 mb-1">Role</label>
-                            <select id="role" required
+                            <select id="role" name="role" required
                                 class="w-full px-4 py-2 bg-gray-800/50 border border-gray-700 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-colors">
                                 <option value="">Choose your role</option>
                                 <option value="organisator">Organizer</option>
@@ -80,7 +75,7 @@
                     </div>
 
                     <button type="submit" 
-                        class="w-full py-2 px-4 bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600 rounded-lg font-medium transition-colors" disabled={isLoading}>
+                        class="w-full py-2 px-4 bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600 rounded-lg mt-8 font-medium transition-colors cursor-pointer">
                         Create Account
                     </button>
 
@@ -95,11 +90,11 @@
 
                     <p class="text-center text-sm text-gray-400">
                         Already have an account?
-                        <a href="/signin" class="text-purple-400 hover:text-purple-300 transition-colors ml-1">
+                        <a href="/signin" class="text-purple-400 hover:text-purple-300 transition-colors ml-1 cursor-pointer">
                             Sign in
                         </a>
                     </p>
-                </div>
+                </form>
             </div>
         </div>
     </main>
@@ -154,8 +149,8 @@
             </div>
         </div>
     </footer>
+    <script src="./assets/js/userSignup.js"></script>
 </body>
 
-<script src="../../assets/js/user.js"></script>
 
 </html>

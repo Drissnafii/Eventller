@@ -28,7 +28,7 @@
       container_name: EventlerPlatform
       restart: always
       volumes:
-        - ./backend/:/var/www/html
+        - ./:/var/www/html
       ports:
         - "88:80"
 
