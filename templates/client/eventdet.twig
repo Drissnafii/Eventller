@@ -81,8 +81,7 @@
                                             <span class="text-2xl font-bold text-white">{{ event.places }}</span>
                                         </div>
                                         <div class="mt-2 h-2 bg-white/10 rounded-full overflow-hidden">
-                                            {% set percentage =event.percentage %}
-                                            <div class="h-full bg-gradient-to-r from-purple-500 to-pink-500" style="width: {{ percentage }}%"></div>             </div>
+                                            <div id="pbar" class="h-full bg-gradient-to-r from-purple-500 to-pink-500"></div>             </div>
                                     </div>
                                 </div>
                                 {# here you need the user id and the event id to insert it to the teckit  table  #}
@@ -136,6 +135,12 @@
                     © 2025 Eventler. All rights reserved.
                 </div>
             </div>
+            <script>
+                document.addEventListener("DOMContentLoaded", function() {
+                    var pbar = document.getElementById("pbar");
+                    pbar.style.width = "{{ event.percentage }}%";
+                });
+            </script>
         </footer>
 </body>
 </html></svg>
