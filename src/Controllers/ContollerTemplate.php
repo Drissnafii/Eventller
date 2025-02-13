@@ -4,10 +4,10 @@ use App\Repositories\EventRepository;
 use App\Controllers\TwigController;
 use App\Core\Database;
 
-class ContollerTemplate extends TwigController{
-    
+class ContollerTemplate extends TwigController
+{
     public function Home(){
-        echo $this->twig->render('client/home.twig', []);
+        echo $this->twig->render('client/Home.twig', []);
     }
     public function Signin(){
         echo $this->twig->render('client/signin.twig', []);

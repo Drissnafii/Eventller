@@ -4,6 +4,7 @@ namespace Config;
 
 use Config\Route;
 use App\Controllers\ContollerTemplate;
+use App\Controllers\UserController;
 
 class Routes{
 
@@ -22,7 +23,12 @@ class Routes{
                 new Route(uri:'/signup',contoller:ContollerTemplate::class,method:'Signup'),
                 new Route(uri:'/forgotpassword',contoller:ContollerTemplate::class,method:'Forgotpassword')
             ],
-            'POST' => [] ,
+            'POST' => [
+                new Route(uri:'/login',contoller:UserController::class,method:'login', parametres: [
+                    'email' => 'email',
+                    'password' => 'string'
+                ]),
+            ] ,
             'PUT' => [] ,
             'DELETE' => [] ,
             'PATCH' => [] ,
