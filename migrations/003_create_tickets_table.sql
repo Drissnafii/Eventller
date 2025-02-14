@@ -7,6 +7,10 @@ CREATE TABLE tickets (
     FOREIGN KEY (origanisatorId) REFERENCES users(id) ON DELETE CASCADE
 );
 
+INSERT into tickets (eventid , origanisatorid , places) VALUES (21 , 31 , 70);
+INSERT into tickets (eventid , origanisatorid , places) VALUES (22 , 31 , 40);
+
+
 CREATE TABLE booking (
     id SERIAL PRIMARY KEY,
     ticketId INT,
@@ -18,3 +22,4 @@ CREATE TABLE booking (
     FOREIGN KEY (userId) REFERENCES users(id) ON DELETE CASCADE,
     FOREIGN KEY (ticketId) REFERENCES tickets(id) ON DELETE CASCADE
 );
+
