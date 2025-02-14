@@ -20,23 +20,33 @@ class ContollerTemplate extends TwigController{
         echo $this->twig->render('client/forgotpassword.twig', []);
     }
     public function Dashboard(){
+        $Repository = new EventRepository();
+        // $Repository->Statistics();
         echo $this->twig->render('admin/dashborad.twig', []);
     }
-    public function events(){
-        echo $this->twig->render('client/events.twig',[]);
-    }    
-    public function payment(){
-        $ticket = new TicketController();
-        $event = new EventRepository();
 
-        $eventdata = $event->findById($_GET['eventId']);
-        $data = $ticket->show($_GET['eventId']);
+    public function Admin_Events(){
+        echo $this->twig->render('admin/events.twig', []);
+    }
+    public function Admin_Users(){
+        echo $this->twig->render('admin/users.twig', []);
+    }
+    public function Org_Dashboard() {
+        echo $this->twig->render('organisator/dashborad.twig', []);
+    }
+    public function Platform() {
+        echo $this->twig->render("client/Home.twig");
+    }
 
-        echo $this->twig->render('client/payment.twig',[
-            'ticket'=>$data,
-            'event'=>$eventdata
+    public function Events(){
+        // $eventdata = $event->findById($_GET['eventId']);
+        // $data = $ticket->show($_GET['eventId']);
 
-        ]);
+        // echo $this->twig->render('client/payment.twig',[
+        //     'ticket'=>$data,
+        //     'event'=>$eventdata
+
+        // ]);
     }    
     public function eventdet(){
         $event = new EventRepository();

@@ -3,10 +3,283 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Admin Dashboard - Eventler</title>
     <script src="https://unpkg.com/@tailwindcss/browser@4"></script>
-</head>
-<body>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="./assets/js/admincharts.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.min.js"></script>
     
+</head>
+<body class="min-h-screen bg-gradient-to-br from-gray-900 via-black to-gray-900 text-gray-100">
+    <div class="flex h-screen">
+        <!-- Sidebar -->
+        <div class="w-64 bg-black/30 backdrop-blur-lg border-r border-gray-800 hidden md:block">
+            <div class="h-16 flex items-center px-6 border-b border-gray-800">
+                <ahref="/" class="text-xl font-bold bg-gradient-to-r from-purple-400 to-pink-600 bg-clip-text text-transparent">
+                    Eventler Admin
+                </a>
+            </div>
+            <nav class="mt-8">
+
+            <ul class="nav-links">
+                <li><div class="px-4 mb-3">
+                    <p class="text-xs uppercase tracking-wider text-gray-500">MAIN</p>
+                </div></li>
+                <li><ahref="/" class="flex items-center py-2 px-6 bg-gradient-to-r from-purple-500/20 to-pink-500/10 border-l-4 border-pink-500">
+                    <svg class="w-5 h-5 mr-3 text-pink-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"></path>
+                    </svg>
+                    Dashboard
+                </a></li>
+                <li><a href="/a_events" class="flex items-center py-2 px-6 text-gray-300 hover:bg-gray-800/20 hover:text-white transition-colors">
+                    <svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
+                    </svg>
+                    Events
+                </a></li>
+                <li><a href="/users" class="flex items-center py-2 px-6 text-gray-300 hover:bg-gray-800/20 hover:text-white transition-colors">
+                    <svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z"></path>
+                    </svg>
+                    Users
+                </a></li>
+            </ul>
+
+            </nav>
+        </div>
+
+        <!-- Main Content -->
+        <div class="flex-1 flex flex-col overflow-hidden">
+            <!-- Top Navbar -->
+            <div class="flex items-center h-16 justify-between px-6 border-b border-gray-800 bg-black/20 backdrop-blur-lg">
+                <div class="md:hidden">
+                    <ahref="/" class="text-xl font-bold bg-gradient-to-r from-purple-400 to-pink-600 bg-clip-text text-transparent">
+                        Eventler
+                    </a>
+                </div>
+                <div class="flex items-center ml-auto">
+                    <button class="p-2 mr-4 rounded-lg bg-gray-800/50 hover:bg-gray-800/80 transition-colors">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9"></path>
+                        </svg>
+                    </button>
+                    <div class="relative">
+                        <button class="flex items-center">
+                            <div class="h-8 w-8 rounded-full bg-gradient-to-r from-purple-500 to-pink-500 flex items-center justify-center">
+                                <span class="font-medium text-sm">JD</span>
+                            </div>
+                            <span class="ml-2 text-sm hidden md:block">John Doe</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Content -->
+            <div class="flex-1 overflow-y-auto p-6">
+                <div class="max-w-7xl mx-auto">
+                    <h1 class="text-2xl font-bold mb-6">Dashboard Overview</h1>
+                    
+                    <!-- Stats Cards -->
+                    <div id="cards" class="relative grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-8 ">
+                         <div class="animate-pulse  bg-gray-700 backdrop-blur-sm rounded-lg p-6 border border-gray-700 h-36">
+                            <div class="flex items-center justify-center">
+                            </div>
+                        </div>
+                        <div class="animate-pulse  bg-gray-700 backdrop-blur-sm rounded-lg p-6 border border-gray-700">
+                            <div class="flex items-center justify-between">
+                            </div>
+                        </div>
+                        <div class="animate-pulse  bg-gray-700 backdrop-blur-sm rounded-lg p-6 border border-gray-700">
+                            <div class="flex items-center justify-between">
+                            </div>
+                        </div>
+                        <div class="animate-pulse bg-gray-700 backdrop-blur-sm rounded-lg p-6 border border-gray-700">
+                            <div class="flex items-center justify-between">
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Chart And Recent Activity -->
+                    <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-8">
+                        <div class="lg:col-span-2 bg-gray-800/30 backdrop-blur-sm rounded-lg p-6 border border-gray-700">
+                            <h3 class="font-medium mb-4">Revenue Overview</h3>
+                            <div class="h-80">
+                                <canvas id="revenueChart">
+                                </canvas>
+                            </div>
+                        </div>
+                        
+                        <div class="bg-gray-800/30 backdrop-blur-sm rounded-lg p-6 border border-gray-700">
+                            <h3 class="font-medium mb-4">Recent Activity</h3>
+                            <div class="space-y-4">
+                                <div class="flex items-start">
+                                    <div class="h-8 w-8 rounded-full bg-purple-600/30 flex items-center justify-center mr-3 mt-1">
+                                        <svg class="w-4 h-4 text-purple-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M18 9v3m0 0v3m0-3h3m-3 0h-3m-2-5a4 4 0 11-8 0 4 4 0 018 0zM3 20a6 6 0 0112 0v1H3v-1z"></path>
+                                        </svg>
+                                    </div>
+                                    <div>
+                                        <p class="text-sm">New user registered</p>
+                                        <p class="text-xs text-gray-400">Jane Smith</p>
+                                        <p class="text-xs text-gray-500">2 minutes ago</p>
+                                    </div>
+                                </div>
+                                
+                                <div class="flex items-start">
+                                    <div class="h-8 w-8 rounded-full bg-pink-600/30 flex items-center justify-center mr-3 mt-1">
+                                        <svg class="w-4 h-4 text-pink-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 5v2m0 4v2m0 4v2M5 5a2 2 0 00-2 2v3a2 2 0 110 4v3a2 2 0 002 2h14a2 2 0 002-2v-3a2 2 0 110-4V7a2 2 0 00-2-2H5z"></path>
+                                        </svg>
+                                    </div>
+                                    <div>
+                                        <p class="text-sm">Ticket purchased</p>
+                                        <p class="text-xs text-gray-400">Tech Conference 2025</p>
+                                        <p class="text-xs text-gray-500">15 minutes ago</p>
+                                    </div>
+                                </div>
+                                
+                                <div class="flex items-start">
+                                    <div class="h-8 w-8 rounded-full bg-blue-600/30 flex items-center justify-center mr-3 mt-1">
+                                        <svg class="w-4 h-4 text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 8h10M7 12h4m1 8l-4-4H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-3l-4 4z"></path>
+                                        </svg>
+                                    </div>
+                                    <div>
+                                        <p class="text-sm">New comment</p>
+                                        <p class="text-xs text-gray-400">On "Summer Music Festival"</p>
+                                        <p class="text-xs text-gray-500">45 minutes ago</p>
+                                    </div>
+                                </div>
+                                
+                                <div class="flex items-start">
+                                    <div class="h-8 w-8 rounded-full bg-green-600/30 flex items-center justify-center mr-3 mt-1">
+                                        <svg class="w-4 h-4 text-green-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14.828 14.828a4 4 0 01-5.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                                        </svg>
+                                    </div>
+                                    <div>
+                                        <p class="text-sm">Event review</p>
+                                        <p class="text-xs text-gray-400">5-star rating for "Art Exhibition"</p>
+                                        <p class="text-xs text-gray-500">1 hour ago</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Recent Events Table -->
+                    <div class="bg-gray-800/30 backdrop-blur-sm rounded-lg p-6 border border-gray-700">
+                        <div class="flex justify-between items-center mb-6">
+                            <h3 class="font-medium">Recent Events</h3>
+                            <button class="text-sm px-4 py-2 rounded-lg bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600 text-white transition-colors">
+                                View All
+                            </button>
+                        </div>
+                        <div class="overflow-x-auto">
+                            <table class="w-full">
+                                <thead>
+                                    <tr class="text-left text-xs text-gray-400 border-b border-gray-700">
+                                        <th class="pb-3 font-medium">Event Name</th>
+                                        <th class="pb-3 font-medium">Organizer</th>
+                                        <th class="pb-3 font-medium">Date</th>
+                                        <th class="pb-3 font-medium">Status</th>
+                                        <th class="pb-3 font-medium">Ticket Sales</th>
+                                        <th class="pb-3 font-medium">Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr class="border-b border-gray-700/50">
+                                        <td class="py-4">Tech Conference 2025</td>
+                                        <td class="py-4">TechCorp Inc.</td>
+                                        <td class="py-4">Mar 15, 2025</td>
+                                        <td class="py-4">
+                                            <span class="px-2 py-1 text-xs rounded-full bg-green-500/20 text-green-400">Active</span>
+                                        </td>
+                                        <td class="py-4">1,245 / 2,000</td>
+                                        <td class="py-4">
+                                            <button class="text-gray-400 hover:text-white p-1">
+                                                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z"></path>
+                                                </svg>
+                                            </button>
+                                        </td>
+                                    </tr>
+                                    
+                                    <tr class="border-b border-gray-700/50">
+                                        <td class="py-4">Summer Music Festival</td>
+                                        <td class="py-4">Melody Productions</td>
+                                        <td class="py-4">Jun 25, 2025</td>
+                                        <td class="py-4">
+                                            <span class="px-2 py-1 text-xs rounded-full bg-purple-500/20 text-purple-400">Upcoming</span>
+                                        </td>
+                                        <td class="py-4">876 / 5,000</td>
+                                        <td class="py-4">
+                                            <button class="text-gray-400 hover:text-white p-1">
+                                                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z"></path>
+                                                </svg>
+                                            </button>
+                                        </td>
+                                    </tr>
+                                    
+                                    <tr class="border-b border-gray-700/50">
+                                        <td class="py-4">Art Exhibition</td>
+                                        <td class="py-4">Creative Minds Gallery</td>
+                                        <td class="py-4">Feb 10, 2025</td>
+                                        <td class="py-4">
+                                            <span class="px-2 py-1 text-xs rounded-full bg-gray-500/20 text-gray-400">Completed</span>
+                                        </td>
+                                        <td class="py-4">542 / 800</td>
+                                        <td class="py-4">
+                                            <button class="text-gray-400 hover:text-white p-1">
+                                                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z"></path>
+                                                </svg>
+                                            </button>
+                                        </td>
+                                    </tr>
+                                    
+                                    <tr class="border-b border-gray-700/50">
+                                        <td class="py-4">Business Workshop</td>
+                                        <td class="py-4">Entrepreneur Alliance</td>
+                                        <td class="py-4">Apr 22, 2025</td>
+                                        <td class="py-4">
+                                            <span class="px-2 py-1 text-xs rounded-full bg-purple-500/20 text-purple-400">Upcoming</span>
+                                        </td>
+                                        <td class="py-4">324 / 500</td>
+                                        <td class="py-4">
+                                            <button class="text-gray-400 hover:text-white p-1">
+                                                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z"></path>
+                                                </svg>
+                                            </button>
+                                        </td>
+                                    </tr>
+                                    
+                                    <tr>
+                                        <td class="py-4">Charity Gala</td>
+                                        <td class="py-4">Hope Foundation</td>
+                                        <td class="py-4">May 30, 2025</td>
+                                        <td class="py-4">
+                                            <span class="px-2 py-1 text-xs rounded-full bg-yellow-500/20 text-yellow-400">Draft</span>
+                                        </td>
+                                        <td class="py-4">218 / 600</td>
+                                        <td class="py-4">
+                                            <button class="text-gray-400 hover:text-white p-1">
+                                                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z"></path>
+                                                </svg>
+                                            </button>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </body>
+
 </html>

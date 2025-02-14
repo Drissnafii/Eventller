@@ -38,6 +38,19 @@ class UserController {
         }
     }
 
+    public function Rederiction() {
+        if (isset($_SESSION["id"]) && $_SESSION["role"] == "admin") {
+            header("Location: /dashboard");
+            exit();
+        } else if (isset($_SESSION["id"]) && $_SESSION["role"] == "organisator") {
+            header("Location: /org_dashboard");
+            exit();
+        } else if (isset($_SESSION["id"]) && $_SESSION["role"] == "user") {
+            header("Location: /platform");
+            exit();
+        }
+    }
+
     public function signup() {
         if ($_SERVER["REQUEST_METHOD"] === "POST") {
             $name = $_POST["name"] ?? "";
@@ -71,5 +84,37 @@ class UserController {
                 echo json_encode(["success" => false, "message" => "Signup failed! Try again."]);
             }
         }
+    }
+    public function Statistics(){
+        
+        header("Content-Types: application/json");
+            echo json_encode([
+                "cards" =>[
+                    [
+                        "title" => "Total Events",
+                        "value" => 6222,
+                        "etat" => "up",
+                        "percentage" => 99.99
+                    ],
+                    [
+                        "title" => "Active Users",
+                        "value" => 5,842,
+                        "etat" => "up",
+                        "percentage" => 8.2
+                    ],
+                    [
+                        "title" => "Total Revenue",
+                        "value" => 128,750,
+                        "etat" => "up",
+                        "percentage" => 15.3
+                    ],
+                    [
+                        "title" => "AVG",
+                        "value" => 12,938                    ,
+                        "etat" => "down",
+                        "percentage" => 2.7
+                    ],
+                ]
+                ]);
     }
 }

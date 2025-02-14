@@ -37,9 +37,13 @@ class TicketRepository implements TicketRepositoryInterface
 
     public function create($data)
     {
-        var_dump($data);
-        //try jsondecode for paymentdetails
-
+        echo 'ticketid . '.$data->ticketid . '<br>';
+        echo 'userid . '.$data->userid . '<br>';
+            // $paymentdetails = json_decode($data["paymentdetails"]);
+        echo 'id : '.isset($data->paymentdetails['id']) ? $data->paymentdetails['id'] : ' id not provide' ;
+        echo 'status : '.isset($data->paymentdetails['status']) ? $data->paymentdetails['status'] : ' status not provide' ;
+        echo 'payer : '.isset($data->paymentdetails['payer']) ? $data->paymentdetails['payer']['email_address'] : ' email_address not provide';
+        echo 'create_time : '.isset($data->paymentdetails["create_time"]) ? $data->paymentdetails['create_time'] : ' create_time not provide';
         
         // $stmt = $this->db->prepare("
         //     INSERT INTO booking (ticketId,  userId, payment_status)

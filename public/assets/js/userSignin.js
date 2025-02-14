@@ -20,7 +20,7 @@ document.addEventListener("DOMContentLoaded", function () {
         
             if (data.success) {
                 alert("Login successful!");
-                window.location.href = "/dashboard";
+                window.location.href = "/auth";
             } else {
                 alert("Error: " + data.message);
             }

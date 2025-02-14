@@ -30,13 +30,13 @@ class TicketController
 
     public function create()
     {
-        $paymentDetails =$_POST['paymentDetails'];
-        $ticketid = $_POST['ticketid'];
-        $userId = $_POST['userId'];
+        $data = json_decode(file_get_contents('php://input'), true);
+        $paymentDetails =$data['paymentDetails'];
+        $ticketid = $data['ticketid'];
+        $userId = $data['userId'];
         try {
             $Booking = new Booking(userid: $userId ,paymentdetails: $paymentDetails,ticketid: $ticketid );
-            $ticket = $this->ticketRepository->create($Booking);
-            return $ticket->toArray();
+            return $this->ticketRepository->create($Booking);
         } catch (\Exception $e) {
             return ['error' => 'Failed to create ticket: ' . $e->getMessage()];
         }
