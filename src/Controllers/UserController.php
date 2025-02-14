@@ -73,8 +73,9 @@ class UserController {
         }
     }
     public function Statistics(){
+        
         header("Content-Types: application/json");
-            return json_encode([
+            echo json_encode([
                 "cards" =>[
                     [
                         "title" => "Total Events",
