@@ -38,6 +38,19 @@ class UserController {
         }
     }
 
+    public function Rederiction() {
+        if (isset($_SESSION["id"]) && $_SESSION["role"] == "admin") {
+            header("Location: /dashboard");
+            exit();
+        } else if (isset($_SESSION["id"]) && $_SESSION["role"] == "organisator") {
+            header("Location: /org_dashboard");
+            exit();
+        } else if (isset($_SESSION["id"]) && $_SESSION["role"] == "user") {
+            header("Location: /platform");
+            exit();
+        }
+    }
+
     public function signup() {
         if ($_SERVER["REQUEST_METHOD"] === "POST") {
             $name = $_POST["name"] ?? "";

@@ -29,6 +29,13 @@ class ContollerTemplate extends TwigController{
     public function Admin_Users(){
         echo $this->twig->render('admin/users.twig', []);
     }
+    public function Org_Dashboard() {
+        echo $this->twig->render('organisator/dashborad.twig', []);
+    }
+    public function Platform() {
+        echo $this->twig->render("client/Home.twig");
+    }
+
     public function Events(){
 
         $getAllEvents = new EventRepository();

@@ -16,6 +16,7 @@ class Routes{
                 new Route(uri:'/test', contoller:ContollerTemplate::class ,method:'Test', parametres:[
                     'name' => 'int'
                 ]),
+                new Route(uri:'/auth', contoller:UserController::class, method: 'Rederiction'),
                 new Route(uri:'/dashboard', contoller:ContollerTemplate::class,method:'Dashboard'),
                 new Route(uri:'/a_events', contoller:ContollerTemplate::class,method:'Admin_Events'),
                 new Route(uri:'/users', contoller:ContollerTemplate::class,method:'Admin_Users'),
@@ -24,7 +25,10 @@ class Routes{
                 new Route(uri:'/signin',contoller:ContollerTemplate::class,method:'Signin'),
                 new Route(uri:'/signup',contoller:ContollerTemplate::class,method:'Signup'),
                 new Route(uri:'/forgotpassword',contoller:ContollerTemplate::class,method:'Forgotpassword'),
-                new Route(uri:'/statistics', contoller:UserController::class, method:'Statistics')
+                new Route(uri:'/statistics', contoller:UserController::class, method:'Statistics'),
+                new Route(uri:'/org_dashboard', contoller:ContollerTemplate::class, method:'Org_Dashboard'),
+                new Route(uri:'/platform', contoller:ContollerTemplate::class, method:'Platform')
+
 
             ],
             'POST' => [
