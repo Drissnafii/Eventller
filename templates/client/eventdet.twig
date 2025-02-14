@@ -32,6 +32,7 @@
                 </nav>
 
                 <main class="flex-grow py-12 bg-gradient-to-b from-black via-purple-900/10 to-black">
+                    <p></p>
                     <div class="max-w-7xl mx-auto px-4"></div>
                         <div class="grid grid-cols-1 lg:grid-cols-2 gap-12">
                             <div class="relative h-[500px] rounded-2xl overflow-hidden group">
@@ -85,14 +86,22 @@
                                     </div>
                                 </div>
                                 {# here you need the user id and the event id to insert it to the teckit  table  #}
-                                <a href="/payment?eventId={{ event.id }}"><button  class="w-full bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600 text-white py-4 rounded-xl font-semibold transition duration-300 transform hover:scale-[1.02] focus:ring-2 focus:ring-purple-500 focus:ring-offset-2 focus:ring-offset-black">
+                                <button id="button" class="w-full bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600 text-white py-4 rounded-xl font-semibold transition duration-300 transform hover:scale-[1.02] focus:ring-2 focus:ring-purple-500 focus:ring-offset-2 focus:ring-offset-black">
                                     Book Now
-                                </button></a>
+                                </button>
                             </div>
                         </div>
                     </div>
-                </main>
 
+                <div id="ticketModal" class="fixed inset-0 bg-black/50 backdrop-blur-sm hidden items-center justify-center">
+                    <div class="bg-gray-900 p-6 rounded-xl w-96">
+                        <h2 class="text-xl font-bold mb-4">Select Your Ticket</h2>
+                        <div class="space-y-4" id="ticketsList">
+                            <!-- Tickets will be populated here -->
+                        </div>
+                        <button class="mt-4 w-full bg-gray-800 text-gray-300 py-2 rounded" onclick="closeModal()">Cancel</button>
+                    </div>
+                </div>
         <footer class="border-t border-white/10 bg-black/50 backdrop-blur-xl">
             <div class="max-w-7xl mx-auto px-4 py-12">
                 <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
@@ -134,13 +143,45 @@
                 <div class="mt-8 pt-8 border-t border-white/10 text-center text-sm text-gray-400">
                     © 2025 Eventler. All rights reserved.
                 </div>
-            </div>
+            </div>        
+        </footer>
+
             <script>
                 document.addEventListener("DOMContentLoaded", function() {
                     var pbar = document.getElementById("pbar");
                     pbar.style.width = "{{ event.percentage }}%";
                 });
+                document.getElementById('button').addEventListener('click', function(e) {
+                    e.preventDefault();
+                    fetch(`/tickets?event_id={{ event.id }}`)
+                        .then(response => response.json())
+                        .then(tickets => {
+                            const ticketsList = document.getElementById('ticketsList');
+                            ticketsList.innerHTML = tickets.map(ticket => `
+                                <div class="flex items-center justify-between p-3 bg-gray-800 rounded">
+                                    <div>
+                                        <p class="font-semibold">Price: $${ticket.price}</p>
+                                        <p class="text-sm text-gray-400">Available: ${ticket.places}</p>
+                                    </div>
+                                    <button onclick="selectTicket(${ticket.id})" 
+                                            class="px-4 py-2 bg-purple-500 rounded hover:bg-purple-600">
+                                        Select
+                                    </button>
+                                </div>
+                            `).join('');
+                            document.getElementById('ticketModal').classList.remove('hidden');
+                            document.getElementById('ticketModal').classList.add('flex');
+                        });
+                });
+
+                function closeModal() {
+                    document.getElementById('ticketModal').classList.add('hidden');
+                    document.getElementById('ticketModal').classList.remove('flex');
+                }
+
+                function selectTicket(ticketId) {
+                    window.location.href = `/payment?eventId={{ event.id }}&ticketId=${ticketId}`;
+                }
+
             </script>
-        </footer>
 </body>
-</html></svg>

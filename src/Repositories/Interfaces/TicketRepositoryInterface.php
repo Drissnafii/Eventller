@@ -5,7 +5,7 @@ use App\Models\Ticket;
 
 interface TicketRepositoryInterface
 {
-    /**
+    /** 
      * Find ticket by ID
      */
     public function findById(int $id): ?Ticket;
@@ -14,7 +14,6 @@ interface TicketRepositoryInterface
      * Create new ticket
      */
     public function create(array $data): Ticket;
-
     
     /**
      * Get tickets by event ID
@@ -22,14 +21,9 @@ interface TicketRepositoryInterface
     public function findByEventId(int $eventId): array;
     
     /**
-     * Get tickets by user ID
+     * Get tickets by organizer ID
      */
-    public function findByUserId(int $userId): array;
-    
-    /**
-     * Get tickets by payment status
-     */
-    public function findByPaymentStatus(string $status): array;
+    public function findByOriganisatorId(int $origanisatorId): array;
     
     /**
      * Get all tickets

@@ -41,16 +41,16 @@
                 <div class="space-y-6 mb-8">
                     <div class="flex justify-between items-center">
                         <span class="text-gray-400">Event:</span>
-                        <span class="font-semibold">{{ event.title }}</span>
+                        <span class="font-semibold">{{ eventdata.title }}</span>
                     </div>
                     <div class="flex justify-between items-center">
                         <span class="text-gray-400">Price:</span>
-                        <span class="font-semibold">${{ event.price }}</span>
+                        <span class="font-semibold">${{ ticket.price }}</span>
                     </div>
                     <div class="border-t border-white/10 my-4"></div>
                     <div class="flex justify-between items-center">
                         <span class="text-gray-400">Total:</span>
-                        <span class="text-xl font-bold">${{ event.price }}</span>
+                        <span class="text-xl font-bold">${{ ticket.price }}</span>
                     </div>
                 </div>
 
@@ -134,7 +134,7 @@
                             'Content-Type': 'application/json',
                         },
                         body: JSON.stringify({
-                            eventId: '{{ eventId }}',
+                            eventId: '${{ ticket.id }}',
                             userId: '{{ session.id }}',
                             paymentDetails: details
                         })
