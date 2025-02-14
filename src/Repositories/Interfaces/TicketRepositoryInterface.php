@@ -8,7 +8,7 @@ interface TicketRepositoryInterface
     /** 
      * Find ticket by ID
      */
-    public function findById(int $id): ?Ticket;
+    public function findById(int $id);
     
     /**
      * Create new ticket

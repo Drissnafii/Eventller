@@ -41,7 +41,7 @@
                 <div class="space-y-6 mb-8">
                     <div class="flex justify-between items-center">
                         <span class="text-gray-400">Event:</span>
-                        <span class="font-semibold">{{ eventdata.title }}</span>
+                        <span class="font-semibold">{{ event.title }}</span>
                     </div>
                     <div class="flex justify-between items-center">
                         <span class="text-gray-400">Price:</span>
@@ -127,7 +127,7 @@
             },
             onApprove: function(data, actions) {
                 return actions.order.capture().then(function(details) {
-                    //#####################################################################################################
+                    
                 });
             }
         }).render('#paypal-button-container');
