@@ -6,11 +6,6 @@ use App\Services\ValidationController;
 class Router extends TwigController{
 
     public array $routes ;
-    /**
-     * Redirect request to the specified controller
-     * 
-     * @return string
-     */
     public function dispatch(){
         $Found = false;
         Routes::load();
@@ -22,19 +17,10 @@ class Router extends TwigController{
                 $class =  $r->contoller;
                 $parametres =  $r->parametres;
                 $method =  $r->method;
-                $request = ($methodHTTP == 'GET') ? $_GET : (json_decode(file_get_contents('php://input'), true) ?? $_POST);
+                $request = ($methodHTTP == 'GET' || $methodHTTP == 'DELETE') ? $_GET : (json_decode(file_get_contents('php://input'), true) ?? $_POST);
                 $AuthController = ValidationController::Validation($parametres ,$request );
                 if($AuthController){
                     $controller = new $class();
-                    //$middleware =  new AuthMiddleware($r["role"]);
-                    // if($r->middleware !=null){
-                    //     // $middleware->handle($request ,function () use ($class, $method) {
-                    //     //     $controller = new $class();
-                    //     //     return $controller->$method();
-                    //     // });
-                    //     $Found= true;
-                    //     break;
-                    // }
                     $controller->$method($request);
                 }else{
                     //echo 'Missing parametres';

@@ -5,7 +5,7 @@ namespace Config;
 use Config\Route;
 use App\Controllers\ContollerTemplate;
 use App\Controllers\EventController;
-
+use App\Controllers\UserController;
 class Routes{
 
     public static  $routes = [];
@@ -26,7 +26,13 @@ class Routes{
 
                 new Route(uri:'/getevents', contoller:EventController::class,method:'Find',parametres:['offset'=>"string"]),
             ],
-            'POST' => [] ,
+            'POST' => [
+                new Route(uri:'/testpost', contoller:ContollerTemplate::class ,method:'Test', parametres:[
+                    'name' => 'int'
+                ]),
+                new Route(uri:'/register', contoller:UserController::class, method:'signup'),
+                new Route(uri:'/login', contoller:UserController::class, method:'login')
+            ] ,
             'PUT' => [] ,
             'DELETE' => [] ,
             'PATCH' => [] ,
