@@ -1,4 +1,4 @@
-  services:
+services:
     postgres:
       image: postgres:17
       container_name: eventlerdb
@@ -31,6 +31,5 @@
         - ./:/var/www/html
       ports:
         - "88:80"
-
-  volumes:
-    postgres_data:
+volumes:
+  postgres_data:
