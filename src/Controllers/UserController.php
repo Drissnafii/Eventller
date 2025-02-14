@@ -72,4 +72,35 @@ class UserController {
             }
         }
     }
+    public function Statistics(){
+        header("Content-Types: application/json");
+            return json_encode([
+                "cards" =>[
+                    [
+                        "title" => "Total Events",
+                        "value" => 6222,
+                        "etat" => "up",
+                        "percentage" => 99.99
+                    ],
+                    [
+                        "title" => "Active Users",
+                        "value" => 5,842,
+                        "etat" => "up",
+                        "percentage" => 8.2
+                    ],
+                    [
+                        "title" => "Total Revenue",
+                        "value" => 128,750,
+                        "etat" => "up",
+                        "percentage" => 15.3
+                    ],
+                    [
+                        "title" => "Total Events",
+                        "value" => 12,938                    ,
+                        "etat" => "down",
+                        "percentage" => 2.7
+                    ],
+                ]
+                ]);
+    }
 }

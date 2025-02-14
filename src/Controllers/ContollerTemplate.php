@@ -19,7 +19,15 @@ class ContollerTemplate extends TwigController{
         echo $this->twig->render('client/forgotpassword.twig', []);
     }
     public function Dashboard(){
+        $Repository = new EventRepository();
+        // $Repository->Statistics();
         echo $this->twig->render('admin/dashborad.twig', []);
+    }
+    public function Admin_Events(){
+        echo $this->twig->render('admin/events.twig', []);
+    }
+    public function Admin_Users(){
+        echo $this->twig->render('admin/users.twig', []);
     }
     public function Events(){
 

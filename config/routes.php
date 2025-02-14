@@ -17,11 +17,15 @@ class Routes{
                     'name' => 'int'
                 ]),
                 new Route(uri:'/dashboard', contoller:ContollerTemplate::class,method:'Dashboard'),
+                new Route(uri:'/a_events', contoller:ContollerTemplate::class,method:'Admin_Events'),
+                new Route(uri:'/users', contoller:ContollerTemplate::class,method:'Admin_Users'),
                 new Route(uri:'/dbconnection', contoller:ContollerTemplate::class,method:'Dbconnection'),
                 new Route(uri:'/events', contoller:ContollerTemplate::class,method:'Events'),
                 new Route(uri:'/signin',contoller:ContollerTemplate::class,method:'Signin'),
                 new Route(uri:'/signup',contoller:ContollerTemplate::class,method:'Signup'),
-                new Route(uri:'/forgotpassword',contoller:ContollerTemplate::class,method:'Forgotpassword')
+                new Route(uri:'/forgotpassword',contoller:ContollerTemplate::class,method:'Forgotpassword'),
+                new Route(uri:'/statistics', contoller:UserController::class, method:'Statistics')
+
             ],
             'POST' => [
                 new Route(uri:'/testpost', contoller:ContollerTemplate::class ,method:'Test', parametres:[
