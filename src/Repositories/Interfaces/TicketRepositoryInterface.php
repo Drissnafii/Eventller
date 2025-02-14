@@ -13,7 +13,7 @@ interface TicketRepositoryInterface
     /**
      * Create new ticket
      */
-    public function create(array $data): Ticket;
+    public function create($data);
     
     /**
      * Get tickets by event ID

@@ -3,22 +3,24 @@
 namespace App\Models;
 
 class Ticket {
+
     private $id;
-    private $eventId;
+    private $event;
     private $price;
     private $origanisatorId;
     private $places;
+
 
     public function getId() {
         return $this->id;
     }
 
-    public function getEventId() {
-        return $this->eventId;
+    public function getEvent() {
+        return $this->event;
     }
 
-    public function setEventId($eventId) {
-        $this->eventId = $eventId;
+    public function setEvent($event) {
+        $this->event = $event;
     }
 
     public function getPrice() {
@@ -48,7 +50,7 @@ class Ticket {
     public function toArray() {
         return [
             'id' => $this->id,
-            'eventId' => $this->eventId,
+            'event' => $this->event,
             'price' => $this->price,
             'origanisatorId' => $this->origanisatorId,
             'places' => $this->places

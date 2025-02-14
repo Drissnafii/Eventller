@@ -35,24 +35,40 @@ class TicketRepository implements TicketRepositoryInterface
         return $array;
     }
 
-    public function create(array $data): Ticket
+    public function create($data)
     {
-        $stmt = $this->db->prepare("
-            INSERT INTO tickets (eventId, price, origanisatorId, places)
-            VALUES (?, ?, ?, ?)
-        ");
+        var_dump($data);
+        //try jsondecode for paymentdetails
 
-        $stmt->execute([
-            $data['eventId'],
-            $data['price'],
-            $data['origanisatorId'],
-            $data['places']
-        ]);
+        
+        // $stmt = $this->db->prepare("
+        //     INSERT INTO booking (ticketId,  userId, payment_status)
+        //     VALUES (?, ?, ?)
+        // ");
 
-        $data['id'] = $this->db->lastInsertId();
-        return $this->createTicketFromArray($data);
+        // $stmt->execute([
+        //     $data['eventId'],
+        //     $data['price'],
+        //     $data['origanisatorId'],
+        //     $data['places']
+        // ]);
+
+        // $data['id'] = $this->db->lastInsertId();
+        // return $this->createTicketFromArray($data);
+
     }
 
+    // CREATE TABLE booking (
+    //     id SERIAL PRIMARY KEY,
+    //     ticketId INT,
+    //     userId INT,
+    //     payment_id VARCHAR(255) NULL,
+    //     payment_status VARCHAR(50) NULL,
+    //     payment_amount DECIMAL(10,2) NULL,
+    //     payment_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    //     FOREIGN KEY (userId) REFERENCES users(id) ON DELETE CASCADE,
+    //     FOREIGN KEY (ticketId) REFERENCES tickets(id) ON DELETE CASCADE
+    // );
     public function findByEventId(int $eventId): array
     {
         $stmt = $this->db->prepare("SELECT * FROM tickets WHERE eventId = ?");
@@ -85,7 +101,7 @@ class TicketRepository implements TicketRepositoryInterface
     private function createTicketFromArray(array $data): Ticket
     {
         $ticket = new Ticket();
-        $ticket->setEventId($data['eventId']);
+        $ticket->setEvent($data['eventId']);
         $ticket->setPrice($data['price']);
         $ticket->setOriganisatorId($data['origanisatorId']);
         $ticket->setPlaces($data['places']);

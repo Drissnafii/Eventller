@@ -34,7 +34,10 @@ class Routes{
                     'name' => 'int'
                 ]),
                 new Route(uri:'/register', contoller:UserController::class, method:'signup'),
-                new Route(uri:'/login', contoller:UserController::class, method:'login')
+                new Route(uri:'/login', contoller:UserController::class, method:'login'),
+                new Route(uri:'/booking', contoller:TicketController::class, method:'create', parametres:[
+                    "ticketid" => 'int' , "userId" => 'int', 'paymentDetails' => 'string'
+                ])
             ] ,
             'PUT' => [] ,
             'DELETE' => [] ,
@@ -46,5 +49,10 @@ class Routes{
         return self::$routes;
     }
 }
+// JSON.stringify({
+//     eventId: '${{ ticket.id }}',
+//     userId: '{{ session.id }}',
+//     paymentDetails: details
+// })
 
 ?>

@@ -180,7 +180,38 @@
                 }
 
                 function selectTicket(ticketId) {
-                    window.location.href = `/payment?eventId={{ event.id }}&ticketId=${ticketId}`;
+                    const data = new FormData();
+                    data.append('userId' , 524);
+                    data.append('ticketid' , 25464);
+                    data.append('paymentDetails' , 
+                    JSON.stringify({
+                        "id": "5O190127TN364715T",
+                        "status": "COMPLETED",
+                        "purchase_units": [{
+                            "amount": {
+                                "currency_code": "USD",
+                                "value": "100.00"
+                            }
+                        }],
+                        "payer": {
+                            "email_address": "buyer@email.com"
+                        },
+                        "create_time": "2023-01-01T00:00:00Z"
+                        })
+                    );
+                    fetch('/booking', {
+                        method: 'POST',
+                        body: data
+                    })
+                    
+                    .then(response => response.json())
+                    .then(data => {
+                        console.log(data)
+                        //if(data.success) {
+                          //  window.location.href = '/booking-confirmation';
+                        //}
+                    });
+                    //window.location.href = `/payment?eventId={{ event.id }}&ticketId=${ticketId}`;
                 }
 
             </script>

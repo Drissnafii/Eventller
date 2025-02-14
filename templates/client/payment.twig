@@ -127,25 +127,7 @@
             },
             onApprove: function(data, actions) {
                 return actions.order.capture().then(function(details) {
-                    
-                    fetch('/create-ticket', {
-                        method: 'POST',
-                        headers: {
-                            'Content-Type': 'application/json',
-                        },
-                        body: JSON.stringify({
-                            eventId: '${{ ticket.id }}',
-                            userId: '{{ session.id }}',
-                            paymentDetails: details
-                        })
-                    })
-                    
-                    .then(response => response.json())
-                    .then(data => {
-                        if(data.success) {
-                            window.location.href = '/booking-confirmation';
-                        }
-                    });
+                    //#####################################################################################################
                 });
             }
         }).render('#paypal-button-container');

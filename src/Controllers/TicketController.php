@@ -2,8 +2,8 @@
 namespace App\Controllers;
 
 use App\Models\Ticket;
+use App\Models\Booking;
 use App\Repositories\TicketRepository;
-
 
 class TicketController
 {
@@ -28,17 +28,14 @@ class TicketController
         return $ticket;
     }
 
-    public function create(array $data)
+    public function create()
     {
+        $paymentDetails =$_POST['paymentDetails'];
+        $ticketid = $_POST['ticketid'];
+        $userId = $_POST['userId'];
         try {
-            $requiredFields = ['eventId', 'price', 'origanisatorId', 'places'];
-            foreach ($requiredFields as $field) {
-                if (!isset($data[$field])) {
-                    return ['error' => "Missing required field: {$field}"];
-                }
-            }
-
-            $ticket = $this->ticketRepository->create($data);
+            $Booking = new Booking(userid: $userId ,paymentdetails: $paymentDetails,ticketid: $ticketid );
+            $ticket = $this->ticketRepository->create($Booking);
             return $ticket->toArray();
         } catch (\Exception $e) {
             return ['error' => 'Failed to create ticket: ' . $e->getMessage()];
