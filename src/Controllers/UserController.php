@@ -96,7 +96,7 @@ class UserController {
                         "percentage" => 15.3
                     ],
                     [
-                        "title" => "Total Events",
+                        "title" => "AVG",
                         "value" => 12,938                    ,
                         "etat" => "down",
                         "percentage" => 2.7
