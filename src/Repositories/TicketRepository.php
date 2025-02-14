@@ -13,7 +13,7 @@ class TicketRepository implements TicketRepositoryInterface
         $this->db = Database::getConnection();
     }
 
-    public function findById(int $id): ?Ticket
+    public function findById(int $id)
     {
         $stmt = $this->db->prepare("SELECT * FROM tickets WHERE id = ?");
         $stmt->execute([$id]);
@@ -22,17 +22,12 @@ class TicketRepository implements TicketRepositoryInterface
         if (!$result) {
             return null;
         }
-        $array = [];
-        print_r($result[0]);
-        foreach ($result as $ticket) {
-            $array[] = [
-                "id" => $ticket["id"],
-                "eventid" => $ticket["eventId"],
-                "price" => $ticket["price"],
-                "places" => $ticket["places"]
-            ];
-        }
-        return $array;
+        return $array[] = [
+            "id" => $result["id"],
+            "eventid" => $result["eventid"],
+            "price" => $result["price"],
+            "places" => $result["places"]
+        ];
     }
 
     public function create(array $data): Ticket
