@@ -6,6 +6,8 @@ use Config\Route;
 use App\Controllers\ContollerTemplate;
 use App\Controllers\EventController;
 use App\Controllers\UserController;
+use App\Controllers\TicketController;
+
 class Routes{
 
     public static  $routes = [];
@@ -25,6 +27,7 @@ class Routes{
 
 
                 new Route(uri:'/getevents', contoller:EventController::class,method:'Find',parametres:['offset'=>"string"]),
+                new Route(uri:'/tickets', contoller:TicketController::class,method:'getTicketsByEvent',parametres:['event_id'=>"string"]),
             ],
             'POST' => [
                 new Route(uri:'/testpost', contoller:ContollerTemplate::class ,method:'Test', parametres:[

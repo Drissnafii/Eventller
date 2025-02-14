@@ -22,24 +22,31 @@ class TicketRepository implements TicketRepositoryInterface
         if (!$result) {
             return null;
         }
-
-        return $this->createTicketFromArray($result);
+        $array = [];
+        print_r($result[0]);
+        foreach ($result as $ticket) {
+            $array[] = [
+                "id" => $ticket["id"],
+                "eventid" => $ticket["eventId"],
+                "price" => $ticket["price"],
+                "places" => $ticket["places"]
+            ];
+        }
+        return $array;
     }
 
     public function create(array $data): Ticket
     {
         $stmt = $this->db->prepare("
-            INSERT INTO tickets (event_id, user_id, payment_id, payment_status, payment_amount, payment_date)
-            VALUES (?, ?, ?, ?, ?, ?)
+            INSERT INTO tickets (eventId, price, origanisatorId, places)
+            VALUES (?, ?, ?, ?)
         ");
 
         $stmt->execute([
             $data['eventId'],
-            $data['userId'],
-            $data['payment_id'],
-            $data['payment_status'],
-            $data['payment_amount'],
-            $data['payment_date']
+            $data['price'],
+            $data['origanisatorId'],
+            $data['places']
         ]);
 
         $data['id'] = $this->db->lastInsertId();
@@ -48,22 +55,24 @@ class TicketRepository implements TicketRepositoryInterface
 
     public function findByEventId(int $eventId): array
     {
-        $stmt = $this->db->prepare("SELECT * FROM tickets WHERE event_id = ?");
+        $stmt = $this->db->prepare("SELECT * FROM tickets WHERE eventId = ?");
         $stmt->execute([$eventId]);
-        return $this->createTicketsFromResults($stmt->fetchAll(\PDO::FETCH_ASSOC));
+        $array = [];
+        foreach ($stmt->fetchAll(\PDO::FETCH_ASSOC) as $ticket) {
+            $array[] = [
+                "id" => $ticket["id"],
+                "eventid" => $ticket["eventid"],
+                "price" => $ticket["price"],
+                "places" => $ticket["places"]
+            ];
+        }
+        return $array;
     }
 
-    public function findByUserId(int $userId): array
+    public function findByOriganisatorId(int $origanisatorId): array
     {
-        $stmt = $this->db->prepare("SELECT * FROM tickets WHERE user_id = ?");
-        $stmt->execute([$userId]);
-        return $this->createTicketsFromResults($stmt->fetchAll(\PDO::FETCH_ASSOC));
-    }
-
-    public function findByPaymentStatus(string $status): array
-    {
-        $stmt = $this->db->prepare("SELECT * FROM tickets WHERE payment_status = ?");
-        $stmt->execute([$status]);
+        $stmt = $this->db->prepare("SELECT * FROM tickets WHERE origanisatorId = ?");
+        $stmt->execute([$origanisatorId]);
         return $this->createTicketsFromResults($stmt->fetchAll(\PDO::FETCH_ASSOC));
     }
 
@@ -76,12 +85,10 @@ class TicketRepository implements TicketRepositoryInterface
     private function createTicketFromArray(array $data): Ticket
     {
         $ticket = new Ticket();
-        $ticket->setEventId($data['event_id'] ?? $data['eventId']);
-        $ticket->setUserId($data['user_id'] ?? $data['userId']);
-        $ticket->setPaymentId($data['payment_id']);
-        $ticket->setPaymentStatus($data['payment_status']);
-        $ticket->setPaymentAmount($data['payment_amount']);
-        $ticket->setPaymentDate($data['payment_date']);
+        $ticket->setEventId($data['eventId']);
+        $ticket->setPrice($data['price']);
+        $ticket->setOriganisatorId($data['origanisatorId']);
+        $ticket->setPlaces($data['places']);
         return $ticket;
     }
 

@@ -3,6 +3,7 @@ namespace App\Controllers;
 use App\Repositories\EventRepository;
 use App\Controllers\TwigController;
 use App\Core\Database;
+use App\Repositories\TicketRepository;
 
 class ContollerTemplate extends TwigController{
     
@@ -25,10 +26,16 @@ class ContollerTemplate extends TwigController{
         echo $this->twig->render('client/events.twig',[]);
     }    
     public function payment(){
+        $ticket = new TicketController();
         $event = new EventRepository();
-        $data = $event->findById($_GET['eventId']);
+
+        $eventdata = $event->findById($_GET['eventId']);
+        $data = $ticket->show($_GET['eventId']);
+
         echo $this->twig->render('client/payment.twig',[
-            'event'=>$data
+            'ticket'=>$data,
+            'event'=>$eventdata
+
         ]);
     }    
     public function eventdet(){
