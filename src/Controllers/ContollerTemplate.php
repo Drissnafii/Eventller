@@ -30,7 +30,7 @@ class ContollerTemplate extends TwigController{
         $event = new EventRepository();
 
         $eventdata = $event->findById($_GET['eventId']);
-        $data = $ticket->show($_GET['eventId']);
+        $data = $ticket->show($_GET['ticketId']);
 
         echo $this->twig->render('client/payment.twig',[
             'ticket'=>$data,

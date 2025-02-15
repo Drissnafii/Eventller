@@ -6,6 +6,7 @@ use Config\Route;
 use App\Controllers\ContollerTemplate;
 use App\Controllers\EventController;
 use App\Controllers\TicketController;
+use App\Controllers\PaymentController;
 
 class Routes{
 
@@ -28,7 +29,13 @@ class Routes{
                 new Route(uri:'/getevents', contoller:EventController::class,method:'Find',parametres:['offset'=>"string"]),
                 new Route(uri:'/tickets', contoller:TicketController::class,method:'getTicketsByEvent',parametres:['event_id'=>"string"]),
             ],
-            'POST' => [] ,
+            'POST' => [
+                new Route(uri:'/booking', contoller:PaymentController::class,method:'CreatePayment',parametres:[
+                    'userId' => "int",
+                    'ticketId'=>"int",
+                    'paymentDetails'=>"string",
+                ]),
+            ] ,
             'PUT' => [] ,
             'DELETE' => [] ,
             'PATCH' => [] ,

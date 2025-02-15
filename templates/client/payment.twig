@@ -128,21 +128,24 @@
             onApprove: function(data, actions) {
                 return actions.order.capture().then(function(details) {
                     
-                    fetch('/create-ticket', {
+                    data = new FormData();
+                    data.append('ticketId', '${{ ticket.id }}');
+                    data.append('userId', '{{ session.id }}');
+                    data.append('paymentDetails', details);
+                    
+                    fetch('/booking', {
                         method: 'POST',
+
                         headers: {
                             'Content-Type': 'application/json',
                         },
-                        body: JSON.stringify({
-                            ticket: '${{ ticket.id }}',
-                            userId: '{{ session.id }}',
-                            paymentDetails: JSON.stringify(details)
-                        })
+                        body: JSON.stringify({data})
                     })
                     
                     .then(response => response.json())
                     .then(data => {
                         if(data.success) {
+                            // hna der l page li bghiti tdir redirect liha
                             window.location.href = '/booking-confirmation';
                         }
                     });
