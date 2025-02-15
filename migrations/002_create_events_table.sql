@@ -6,7 +6,6 @@ CREATE TABLE events (
     datetime TIMESTAMP NOT NULL,
     image TEXT DEFAULT '',
     userId INT,
-    eventId INT,
     category_id int , 
     places int, 
     FOREIGN KEY (category_id) REFERENCES categories(id) ON UPDATE CASCADE ON DELETE SET NULL,

@@ -3,6 +3,7 @@ namespace App\Controllers;
 use App\Repositories\EventRepository;
 use App\Controllers\TwigController;
 use App\Core\Database;
+use App\Repositories\TicketRepository;
 
 class ContollerTemplate extends TwigController{
     
@@ -23,31 +24,36 @@ class ContollerTemplate extends TwigController{
         // $Repository->Statistics();
         echo $this->twig->render('admin/dashborad.twig', []);
     }
-    public function Admin_Events(){
-        echo $this->twig->render('admin/events.twig', []);
-    }
-    public function Admin_Users(){
-        echo $this->twig->render('admin/users.twig', []);
-    }
-    public function Org_Dashboard() {
-        echo $this->twig->render('organisator/dashborad.twig', []);
-    }
-    public function Platform() {
-        echo $this->twig->render("client/Home.twig");
-    }
+    public function events(){
+        echo $this->twig->render('client/events.twig',[]);
+    }    
+    public function payment(){
+        $ticket = new TicketController();
+        $event = new EventRepository();
 
-    public function Events(){
+        $eventdata = $event->findById($_GET['eventId']);
+        $data = $ticket->show($_GET['ticketId']);
 
-        $getAllEvents = new EventRepository();
-        $count = $getAllEvents->getEventnumber();
-        $limit = isset($_GET["limit"]) ? $_GET["limit"] : 10;
-        $offset = isset($_GET["offset"]) ? $_GET["offset"] : 0;
-        $events = $getAllEvents->findAll($limit, $offset);
-        
-        echo $this->twig->render('client/events.twig',[
-            "events" => $events,
-            "count" => $count,
+        echo $this->twig->render('client/payment.twig',[
+            'ticket'=>$data,
+            'event'=>$eventdata
+
         ]);
+    }    
+    public function eventdet(){
+        $event = new EventRepository();
+        $data = $event->findById($_GET['eventId']);
+        echo $this->twig->render('client/eventdet.twig',[
+            'event'=>$data
+        ]);
+    }
+    public function booking(){
+        $ticketRepo = new TicketRepository();
+        $tickets = $ticketRepo->findByUserId(1);
+        echo $this->twig->render('client/booking.twig', [
+            'res' => $tickets
+        ]);
+        echo $this->twig->render('client/booking.twig',[        ]);    
     }
     public function Test(){
         echo 'Welcome to test';

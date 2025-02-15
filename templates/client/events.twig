@@ -1,40 +1,35 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-    <script src="https://unpkg.com/@tailwindcss/browser@4"></script>
-    <link rel="stylesheet" href="./assets/css/globals.css" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Events | Eventler</title>
+  <script src="https://unpkg.com/@tailwindcss/browser@4"></script>
+  <link rel="stylesheet" href="./assets/css/globals.css" />
+  
 </head>
 <body class='flex flex-col min-h-screen bg-black text-white'>
-    <nav class="border-b border-white/10 bg-[#131415] backdrop-blur-xl">
-      <div class="max-w-7xl mx-auto px-4">
-        <div class="flex justify-between items-center h-16">
-          <div class="flex items-center">
-            <a href="/" class="text-white font-bold text-xl glow">
-              Eventler
+  <nav class="sticky top-0 z-50 backdrop-blur-lg bg-black/20 border-b border-gray-800">
+    <div class="max-w-7xl mx-auto px-6">
+        <div class="flex items-center justify-between h-16">
+            <a href="/" class="text-2xl font-bold bg-gradient-to-r from-purple-400 to-pink-600 bg-clip-text text-transparent">
+                Eventler
             </a>
-          </div>
-          <div class="hidden md:flex items-center space-x-8">
-            <a href="/" class="text-gray-300 hover:text-white transition duration-300">
-              Home
-            </a>
-            <a href="/events" class="text-gray-300 hover:text-white transition duration-300">
-              Events
-            </a>
-            <a href="/signin">
-              <Button class="text-gray-300 hover:bg-transparent bg-transparent hover:text-white">
-                Sign In
-              </Button>
-            </a>
-            <a href="/signup">
-              <Button class="bg-[#a56bf0] text-black hover:bg-[#6d499c]/94 rounded-md">Sign Up</Button>
-            </a>
-          </div>
+            <div class="hidden md:flex items-center gap-8">
+                <a href="/" class="text-sm text-gray-300 hover:text-white transition-colors">Home</a>
+                <a href="/events" class="text-sm text-gray-300 hover:text-white transition-colors">Events</a>
+                <div class="flex items-center gap-4">
+                    <a href="/signin" class="text-sm px-4 py-2 rounded-lg border border-gray-700 hover:border-gray-600 transition-colors">
+                        Sign In
+                    </a>
+                    <a href="/signup" class="text-sm px-4 py-2 rounded-lg bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600 text-white transition-colors">
+                        Sign Up
+                    </a>
+                </div>
+            </div>
         </div>
-      </div>
-    </nav>
+    </div>
+</nav>
 
     <main class="flex-grow flex justify-center items-center">
         <div class="min-h-screen py-12">
@@ -46,63 +41,15 @@
           </p>
         </div>
 
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          <!--
-            Event 1 -->  
-            {# {% for ev in events %} #}
-         <!-- Replace the static event card with this dynamic loop -->
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-              {% for event in events %}
-              <div class="gradient-border group cursor-pointer">
-                <a href='/events/{{ event.id }}'></a>
-                  <div class="p-4 space-y-4">
-                    <div class="relative h-48 overflow-hidden rounded">
-                      <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent z-10"></div>
-                      <img
-                        src="{{ event.image_url }}"
-                        alt="{{ event.title }}"
-                        class="w-full h-full object-cover transition-transform duration-300 group-hover:scale-110"
-                      />
-                      <span class="absolute top-2 right-2 z-20 bg-[#00E599]/90 text-black px-2 py-1 rounded text-sm"></span>
-                        {{ event.category }}
-                      </span>
-                    </div>
-                    <div>
-                      <h3 class="text-xl font-semibold group-hover:text-[#a56bf0] transition-colors">
-                        {{ event.title }}
-                      </h3>
-                      <p class="text-gray-400 mt-2">{{ event.date }}</p>
-                      <p class="text-gray-400">{{ event.location }}</p>
-                    </div>
-                  </div>
-                </a>
-              </div>
-              {% endfor %}
-            </div>
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6" id="events-container">
+            {# ajax content #}
+                    
 
-            <!-- pagination -->
-            <div class="mt-12 flex justify-center gap-4">
-          
-              {% if currentPage > 1 %}
-              <a href="?limit={{ app.request.get('limit') }}&offset={{ (currentPage - 2) * app.request.get('limit') }}"
-                class="px-4 py-2 border border-[#00E599]/20 hover:border-[#00E599]/40 rounded">
-                Previous
-              </a>
-              {% endif %}
-              
-              {% if currentPage < totalPages %}
-              <a href="?limit={{ app.request.get('limit') }}&offset={{ currentPage * app.request.get('limit') }}"
-                class="px-4 py-2 border border-[#00E599]/20 hover:border-[#00E599]/40 rounded">
-                Next
-              </a>
-              {% endif %}
-              
-              <span class="text-gray-400">
-                Page {{ currentPage }} of {{ totalPages }}
-              </span>
-            </div>
-      </div>
-    </div>
+        </div>
+
+        <div class="mt-12 flex justify-center gap-4" id="pagination">
+            
+        </div>
     </main>
     
       <footer class="border-t border-white/10 bg-black/50 backdrop-blur-xl">
@@ -168,6 +115,79 @@
         </div>
       </div>
     </footer>
+
+
+    <script>
+      let currentPage =  1;
+      const itemsPerPage = 6;
+
+      function loadEvents(page) {
+        currentPage = page;
+        const eventsContainer = document.getElementById('events-container');
+        fetch(`/getevents?offset=${currentPage}`)
+          .then(response => {
+            if (!response.ok) {
+              throw new Error('Failed to load events');
+            }
+            return response.json();
+          })
+          .then(data => {
+            console.log(data);
+              eventsContainer.innerHTML = '';
+              data.events.forEach(event => {
+                eventsContainer.innerHTML += `
+                    <div class="gradient-border group cursor-pointer">
+                    <a href="/eventdet?eventId=${event.id}">
+                      <div class="p-4 space-y-4">
+                      <div class="relative h-48 overflow-hidden rounded">
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent z-10">
+                        </div>
+                        <img src="${event.image}" alt="${event.title}" class="w-full h-full object-cover transition-transform duration-300 group-hover:scale-110">
+                        <span class="absolute top-2 right-2 z-20 bg-[#00E599]/90 text-black px-2 py-1 rounded text-sm">${event.category}</span>
+                      </div>
+                      <div>
+                        <h3 class="text-xl font-semibold group-hover:text-[#a56bf0] transition-colors">${event.title}</h3>
+                        <p class="text-gray-400">${event.location}</p>
+                      </div>
+                      </div>
+                    </a>
+                    </div>
+                `;
+              });
+              updatePagination(page, Math.ceil(data.count / itemsPerPage));
+            })
+            .catch(error => console.error('Error loading events:', error));
+        }
+  
+      function updatePagination(currentPage, totalPages) {
+          const paginationContainer = document.getElementById('pagination');
+          
+          paginationContainer.innerHTML = `
+            <div class="mt-12 flex justify-center gap-4">
+              ${currentPage > 1 ? `
+                <button onclick="loadEvents(${currentPage - 1})"
+                  class="px-4 py-2 border border-[#00E599]/20 hover:border-[#00E599]/40 rounded">
+                  Previous
+                </button>
+              ` : ''}
+              <span class="text-gray-400">
+                Page ${currentPage} of ${totalPages}
+              </span>
+              ${currentPage < totalPages ? `
+                <button onclick="loadEvents(${currentPage + 1})"
+                  class="px-4 py-2 border border-[#00E599]/20 hover:border-[#00E599]/40 rounded">
+                  Next
+                </button>
+              ` : ''}
+              
+
+            </div>
+          `;
+        }
+        document.addEventListener('DOMContentLoaded', function() {
+          loadEvents(1);
+        });
+      </script>
 
 </body>
 </html>
