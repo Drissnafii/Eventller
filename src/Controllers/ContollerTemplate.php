@@ -45,6 +45,14 @@ class ContollerTemplate extends TwigController{
             'event'=>$data
         ]);
     }
+    public function booking(){
+        $ticketRepo = new TicketRepository();
+        $tickets = $ticketRepo->findByUserId(1);
+        echo $this->twig->render('client/booking.twig', [
+            'res' => $tickets
+        ]);
+        echo $this->twig->render('client/booking.twig',[        ]);    
+    }
     public function Test(){
         echo 'Welcome to test';
     }

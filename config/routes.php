@@ -23,6 +23,7 @@ class Routes{
                 new Route(uri:'/signin',contoller:ContollerTemplate::class,method:'Signin'),
                 new Route(uri:'/signup',contoller:ContollerTemplate::class,method:'Signup'),
                 new Route(uri:'/forgotpassword',contoller:ContollerTemplate::class,method:'Forgotpassword'),
+                new Route(uri:'/booking',contoller:ContollerTemplate::class,method:'booking'),
 
 
 

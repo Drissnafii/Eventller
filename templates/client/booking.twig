@@ -3,9 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Payment | Eventler</title>
+    <title>My Reservations - Eventler</title>
     <script src="https://unpkg.com/@tailwindcss/browser@4"></script>
-    <script src="https://www.paypal.com/sdk/js?client-id=ASzVSCX78a1KFMDAE4TevLcStgO8D9CnveeFdjK1YFdUdcbKcpOE09fHuosLwSrsj3_dqS6VW6VJX7HQ&currency=USD"></script>
     <link rel="stylesheet" href="./assets/css/globals.css" />
 </head>
 <body class="min-h-screen bg-gradient-to-br from-gray-900 via-black to-gray-900 text-gray-100">
@@ -25,45 +24,58 @@
                         <a href="/signup" class="text-sm px-4 py-2 rounded-lg bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600 text-white transition-colors">
                             Sign Up
                         </a>
+                        <a href="/booking" class="text-sm text-gray-300 hover:text-white transition-colors">My Reservations</a>
                     </div>
                 </div>
             </div>
         </div>
     </nav>
 
-    <main class="flex-grow py-12">
-        <div class="max-w-2xl mx-auto px-4">
-            <div class="bg-white/5 backdrop-blur-lg rounded-2xl p-8 border border-white/10">
-                <h1 class="text-3xl font-bold mb-8 bg-gradient-to-r from-purple-400 to-pink-600 bg-clip-text text-transparent">
-                    Complete Your Booking
-                </h1>
+    <!-- Main Content -->
+    <main class="max-w-7xl mx-auto px-6 py-12">
+        <h1 class="text-3xl font-bold mb-8 bg-gradient-to-r from-purple-400 to-pink-600 bg-clip-text text-transparent">
+            My Reservations
+        </h1>
 
-                <div class="space-y-6 mb-8">
-                    <div class="flex justify-between items-center">
-                        <span class="text-gray-400">Event:</span>
-                        <span class="font-semibold">{{ event.title }}</span>
+        {% if res %}
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                {% for ticket in res %}
+                    <div class="bg-black/30 backdrop-blur-lg border border-gray-800 rounded-lg overflow-hidden">
+                        <img src="{{ ticket.event_image }}" alt="{{ ticket.event_name }}" class="w-full h-48 object-cover"/>
+                        <div class="p-6">
+                            <h3 class="text-xl font-bold mb-2">{{ ticket.event_name }}</h3>
+                            <p class="text-gray-400 text-sm mb-4">{{ ticket.event_description }}</p>
+                            
+                            <div class="space-y-2 text-sm text-gray-400">
+                                <p><span class="font-medium">Date:</span> {{ ticket.event_date }}</p>
+                                <p><span class="font-medium">Location:</span> {{ ticket.event_location }}</p>
+                                <p><span class="font-medium">Price:</span> ${{ ticket.price }}</p>
+                                <p><span class="font-medium">Booking Date:</span> {{ ticket.booking_date }}</p>
+                                <p><span class="font-medium">Payment Status:</span> 
+                                    <span class="{% if ticket.payment_status == 'paid' %}text-green-500{% else %}text-yellow-500{% endif %}">
+                                        {{ ticket.payment_status|capitalize }}
+                                    </span>
+                                </p>
+                                {% if ticket.payment_date %}
+                                    <p><span class="font-medium">Payment Date:</span> {{ ticket.payment_date }}</p>
+                                {% endif %}
+                            </div>
+                        </div>
                     </div>
-                    <div class="flex justify-between items-center">
-                        <span class="text-gray-400">Price:</span>
-                        <span class="font-semibold">${{ ticket.price }}</span>
-                    </div>
-                    <div class="border-t border-white/10 my-4"></div>
-                    <div class="flex justify-between items-center">
-                        <span class="text-gray-400">Total:</span>
-                        <span class="text-xl font-bold">${{ ticket.price }}</span>
-                    </div>
-                </div>
-
-                <div id="paypal-button-container"></div>
-
-                <p class="mt-6 text-sm text-gray-400 text-center">
-                    By completing this purchase you agree to our
-                    <a href="#" class="text-purple-400 hover:text-purple-300">Terms of Service</a>
-                </p>
+                {% endfor %}
             </div>
-        </div>
+        {% else %}
+            <div class="text-center py-12">
+                <p class="text-gray-400">You don't have any reservations yet.</p>
+                <a href="/events" class="inline-block mt-4 px-6 py-3 rounded-lg bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600 text-white transition-colors">
+                    Browse Events
+                </a>
+            </div>
+        {% endif %}
     </main>
 
+    <!-- Footer (same as home) -->
+    <!-- Footer -->
     <footer class="bg-black/20 backdrop-blur-lg border-t border-gray-800">
         <div class="max-w-7xl mx-auto px-6 py-12">
             <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
@@ -113,45 +125,5 @@
             </div>
         </div>
     </footer>
-
-    <script>
-        paypal.Buttons({
-            createOrder: function(data, actions) {
-                return actions.order.create({
-                    purchase_units: [{
-                        amount: {
-                            value: '{{ event.price }}'
-                        }
-                    }]
-                });
-            },
-            onApprove: function(data, actions) {
-                return actions.order.capture().then(function(details) {
-                    
-                    data = new FormData();
-                    data.append('ticketId', '${{ ticket.id }}');
-                    data.append('userId', '{{ session.id }}');
-                    data.append('paymentDetails', details);
-                    
-                    fetch('/booking', {
-                        method: 'POST',
-
-                        headers: {
-                            'Content-Type': 'application/json',
-                        },
-                        body: JSON.stringify({data})
-                    })
-                    
-                    .then(response => response.json())
-                    .then(data => {
-                        if(data.success) {
-                            // hna der l page li bghiti tdir redirect liha
-                            window.location.href = '/booking';
-                        }
-                    });
-                });
-            }
-        }).render('#paypal-button-container');
-    </script>
 </body>
 </html>

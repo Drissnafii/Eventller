@@ -27,3 +27,12 @@ INSERT INTO tickets (eventId, price, origanisatorId, places) VALUES
 (3, 100.00, 1, 200),
 (4, 30.00, 3, 50),
 (5, 150.00, 1, 30);
+
+
+-- Insert data into Booking table
+INSERT INTO booking (ticketId, userId, payment_id, payment_status, payment_amount, payment_date) VALUES
+(1, 2, 'PAY-1234567', 'paid', 20.00, '2024-01-15 14:30:00'),
+(2, 1, 'PAY-2345678', 'paid', 50.00, '2024-01-16 09:15:00'),
+(3, 2, 'PAY-3456789', 'pending', 100.00, '2024-01-17 16:45:00'),
+(4, 3, 'PAY-4567890', 'paid', 30.00, '2024-01-18 11:20:00'),
+(5, 1, 'PAY-5678901', 'paid', 150.00, '2024-01-19 13:10:00');
