@@ -16,6 +16,8 @@ class Routes{
             'GET' => [
                 new Route(uri:'/', contoller:ContollerTemplate::class ,method:'Home'),
                 new Route(uri:'/dashboard', contoller:ContollerTemplate::class,method:'Dashboard'),
+                new Route(uri:'/a_events', contoller:ContollerTemplate::class,method:'Admin_Events'),
+                new Route(uri:'/users', contoller:ContollerTemplate::class,method:'Admin_Users'),
                 new Route(uri:'/dbconnection', contoller:ContollerTemplate::class,method:'Dbconnection'),
                 new Route(uri:'/events', contoller:ContollerTemplate::class,method:'events'),
                 new Route(uri:'/eventdet', contoller:ContollerTemplate::class,method:'eventdet'),
