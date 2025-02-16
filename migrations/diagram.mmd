@@ -1,0 +1,48 @@
+erDiagram
+    Categories {
+        int id PK
+        varchar name
+    }
+    users {
+        int id PK
+        varchar name
+        varchar email
+        varchar password
+        text avatar
+        varchar role
+        boolean isActivated
+    }
+    events {
+        int id PK
+        varchar title
+        text description
+        varchar location
+        timestamp datetime
+        text image
+        int userId FK
+        int category_id FK
+        int places
+    }
+    tickets {
+        int id PK
+        int eventId FK
+        decimal price
+        int origanisatorId FK
+        int places
+    }
+    booking {
+        int id PK
+        int ticketId FK
+        int userId FK
+        varchar payment_id
+        varchar payment_status
+        decimal payment_amount
+        timestamp payment_date
+    }
+
+    events }o--|| users : "userId"
+    events }o--|| Categories : "category_id"
+    tickets }o--|| events : "eventId"
+    tickets }o--|| users : "origanisatorId"
+    booking }o--|| users : "userId"
+    booking }o--|| tickets : "ticketId"
