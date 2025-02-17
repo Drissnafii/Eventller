@@ -1,0 +1,52 @@
+Table Categories {
+  id integer [pk, increment]
+  name varchar [not null]
+}
+
+Table users {
+  id integer [pk, increment]
+  name varchar [not null]
+  email varchar [not null, unique]
+  password varchar [not null]
+  avatar text [default: '']
+  role varchar(20) [note: 'admin, user, organisator']
+  isActivated boolean [not null, default: false]
+}
+
+Table events {
+  id integer [pk, increment]
+  title varchar [not null]
+  description text [not null]
+  location varchar [not null]
+  datetime timestamp [not null]
+  image text [default: '']
+  userId integer
+  category_id integer
+  places integer
+}
+
+Table tickets {
+  id integer [pk, increment]
+  eventId integer
+  price decimal(10,2) [not null]
+  origanisatorId integer
+  places integer
+}
+
+Table booking {
+  id integer [pk, increment]
+  ticketId integer
+  userId integer
+  payment_id varchar
+  payment_status varchar(50)
+  payment_amount decimal(10,2)
+  payment_date timestamp [default: `CURRENT_TIMESTAMP`]
+}
+
+// All relationships
+Ref: events.userId > users.id [delete: cascade, update: cascade]
+Ref: events.category_id > Categories.id [delete: set null, update: cascade]
+Ref: tickets.eventId > events.id [delete: cascade]
+Ref: tickets.origanisatorId > users.id [delete: cascade]
+Ref: booking.userId > users.id [delete: cascade]
+Ref: booking.ticketId > tickets.id [delete: cascade]

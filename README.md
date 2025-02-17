@@ -139,7 +139,6 @@ Security is our priority:
 - 🚦 Rate Limiting
 
 ## 🤝 Contributing
-
 1. Create a JIRA issue for your task
 2. Branch naming convention: `feature/EV-[ticket-number]-description`
 3. Commit messages should reference JIRA tickets: `[EV-123] Add feature X`
